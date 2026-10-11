@@ -1,0 +1,507 @@
+/* ============================================
+   STYLE.CSS - Kalkulator Mahasiswa
+   Pendekatan: Mobile-first, warna kalem, ringan
+   ============================================ */
+
+/* --- RESET DASAR --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- VARIABEL WARNA (mudah diganti) --- */
+:root {
+    --warna-utama: #2c6e49;       /* Hijau kalem */
+    --warna-utama-tua: #1e4d34;
+    --warna-aksen: #4c956c;
+    --warna-latar: #f7f9f7;
+    --warna-kartu: #ffffff;
+    --warna-teks: #2d3436;
+    --warna-teks-redup: #636e72;
+    --warna-batas: #dfe6e9;
+    --warna-error: #c0392b;
+    --warna-sukses: #27ae60;
+    --radius: 10px;
+    --bayangan: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* --- FONT SISTEM (tidak memuat font eksternal) --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 16px;            /* Minimal 16px agar nyaman di HP */
+    line-height: 1.6;
+    color: var(--warna-teks);
+    background-color: var(--warna-latar);
+    -webkit-text-size-adjust: 100%;
+}
+
+/* --- CONTAINER (lebar maksimum + padding samping) --- */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* --- HEADER --- */
+.site-header {
+    background-color: var(--warna-kartu);
+    border-bottom: 1px solid var(--warna-batas);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--warna-utama-tua);
+    text-decoration: none;
+}
+
+.main-nav {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.main-nav a {
+    color: var(--warna-teks);
+    text-decoration: none;
+    font-size: 15px;
+    padding: 6px 2px;
+}
+
+.main-nav a:hover {
+    color: var(--warna-utama);
+}
+
+/* --- HERO (beranda) --- */
+.hero {
+    text-align: center;
+    padding: 32px 0 24px;
+}
+
+.hero h1 {
+    font-size: 28px;
+    color: var(--warna-utama-tua);
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: var(--warna-teks-redup);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- DAFTAR KALKULATOR --- */
+.calc-list {
+    padding: 16px 0 32px;
+}
+
+.calc-list h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: var(--warna-utama-tua);
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.calc-card {
+    background: var(--warna-kartu);
+    border: 1px solid var(--warna-batas);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-decoration: none;
+    color: var(--warna-teks);
+    box-shadow: var(--bayangan);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.calc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.calc-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.calc-card h3 {
+    font-size: 18px;
+    color: var(--warna-utama-tua);
+    margin-bottom: 6px;
+}
+
+.calc-card p {
+    color: var(--warna-teks-redup);
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.calc-btn {
+    color: var(--warna-utama);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* --- HALAMAN KALKULATOR --- */
+.page-intro {
+    padding: 24px 0 16px;
+    text-align: center;
+}
+
+.page-intro h1 {
+    font-size: 26px;
+    color: var(--warna-utama-tua);
+    margin-bottom: 8px;
+}
+
+.page-intro p {
+    color: var(--warna-teks-redup);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- KOTAK KALKULATOR --- */
+.calculator {
+    background: var(--warna-kartu);
+    border: 1px solid var(--warna-batas);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--bayangan);
+    margin: 16px 0 32px;
+}
+
+/* Pilihan Skala */
+.scale-selector {
+    margin-bottom: 18px;
+}
+
+.scale-selector label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.scale-selector select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid var(--warna-batas);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--warna-teks);
+}
+
+/* Header Baris Input */
+.input-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.2fr 40px;
+    gap: 8px;
+    padding: 8px 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--warna-teks-redup);
+    border-bottom: 1px solid var(--warna-batas);
+    margin-bottom: 8px;
+}
+
+.col-sks, .col-nilai {
+    text-align: center;
+}
+
+/* Setiap Baris Mata Kuliah */
+.baris-mk {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.2fr 40px;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--warna-batas);
+}
+
+.baris-mk input,
+.baris-mk select {
+    width: 100%;
+    padding: 10px 8px;
+    font-size: 16px;
+    border: 1px solid var(--warna-batas);
+    border-radius: 6px;
+    background: #fff;
+}
+
+.baris-mk input:focus,
+.baris-mk select:focus {
+    outline: 2px solid var(--warna-aksen);
+    outline-offset: 1px;
+    border-color: var(--warna-aksen);
+}
+
+.baris-mk .col-sks input,
+.baris-mk .col-nilai select {
+    text-align: center;
+}
+
+.tombol-hapus {
+    background: transparent;
+    border: 1px solid var(--warna-batas);
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--warna-error);
+    transition: background 0.15s;
+}
+
+.tombol-hapus:hover {
+    background: #fdecea;
+}
+
+/* Tombol Tambah Baris */
+#tambahBaris {
+    margin-top: 12px;
+    width: 100%;
+}
+
+/* Tombol Umum */
+.btn {
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    font-family: inherit;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: var(--warna-utama);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--warna-utama-tua);
+}
+
+.btn-secondary {
+    background: #fff;
+    color: var(--warna-utama);
+    border: 1px solid var(--warna-utama);
+}
+
+.btn-secondary:hover {
+    background: #eef6f1;
+}
+
+/* Tombol Aksi (Hitung & Reset) */
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+/* Hasil */
+.hasil {
+    margin-top: 22px;
+    padding: 20px;
+    background: linear-gradient(135deg, #eef6f1 0%, #f7f9f7 100%);
+    border: 1px solid var(--warna-aksen);
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+.hasil-ipk {
+    margin-bottom: 16px;
+}
+
+.hasil-label {
+    display: block;
+    font-size: 14px;
+    color: var(--warna-teks-redup);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.hasil-angka {
+    display: block;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--warna-utama-tua);
+    line-height: 1;
+}
+
+.hasil-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--warna-batas);
+}
+
+.hasil-item-label {
+    display: block;
+    font-size: 13px;
+    color: var(--warna-teks-redup);
+    margin-bottom: 2px;
+}
+
+.hasil-item-angka {
+    display: block;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--warna-teks);
+}
+
+/* Pesan Error */
+.error-msg {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: #fdecea;
+    border: 1px solid #f5b7b1;
+    border-radius: 8px;
+    color: var(--warna-error);
+    font-size: 15px;
+}
+
+/* --- KONTEN SEO --- */
+.content {
+    padding: 16px 0 32px;
+}
+
+.content h2 {
+    font-size: 22px;
+    color: var(--warna-utama-tua);
+    margin: 24px 0 10px;
+}
+
+.content p, .content li {
+    margin-bottom: 10px;
+    color: var(--warna-teks);
+}
+
+.content ul, .content ol {
+    padding-left: 22px;
+    margin-bottom: 12px;
+}
+
+.rumus {
+    background: #eef6f1;
+    border-left: 4px solid var(--warna-aksen);
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-family: "Courier New", monospace;
+    font-size: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+/* FAQ */
+.faq {
+    background: var(--warna-kartu);
+    border: 1px solid var(--warna-batas);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.faq summary {
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq summary::after {
+    content: " +";
+    color: var(--warna-utama);
+    font-weight: 700;
+    float: right;
+}
+
+.faq[open] summary::after {
+    content: " −";
+}
+
+.faq p {
+    padding: 0 16px 14px;
+    color: var(--warna-teks-redup);
+    font-size: 15px;
+}
+
+/* Peringatan */
+.peringatan {
+    background: #fff8e1;
+    border: 1px solid #f4d03f;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 24px;
+    font-size: 15px;
+    color: #7d6608;
+}
+
+/* --- FOOTER --- */
+.site-footer {
+    background: var(--warna-kartu);
+    border-top: 1px solid var(--warna-batas);
+    padding: 24px 0;
+    margin-top: 32px;
+    text-align: center;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.footer-nav a {
+    color: var(--warna-teks-redup);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-nav a:hover {
+    color: var(--warna-utama);
+}
+
+.copyright {
+    font-size: 13px;
+    color: var(--warna-teks-redup);
+}
+
+/* --- RESPONSIVE (layar lebih besar dari 600px) --- */
+@media (min-width: 600px) {
+    .hero h1 { font-size: 34px; }
+    .page-intro h1 { font-size: 30px; }
+    .hasil-angka { font-size: 64px; }
+    .calculator { padding: 28px; }
+}

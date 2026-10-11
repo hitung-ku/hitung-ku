@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator IPK Online Gratis - Hitungku</title>
+    <meta name="description" content="Kalkulator IPK online gratis berbahasa Indonesia di Hitungku. Hitung Indeks Prestasi Kumulatif dengan skala 4.0 sederhana atau plus/minus. Cepat, akurat, tanpa daftar.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo">🧮 Hitungku</a>
+            <nav class="main-nav">
+                <a href="index.html">Beranda</a>
+                <a href="tentang.html">Tentang</a>
+                <a href="kontak.html">Kontak</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- AREA IKLAN: atas kalkulator -->
+
+        <!-- JUDUL HALAMAN -->
+        <section class="page-intro">
+            <h1>Kalkulator IPK</h1>
+            <p>Hitung <strong>Indeks Prestasi Kumulatif (IPK)</strong> kamu secara cepat dan akurat. Masukkan mata kuliah, SKS, dan nilai — hasil akan langsung muncul.</p>
+        </section>
+
+        <!-- KALKULATOR -->
+        <section class="calculator" id="kalkulator">
+            <!-- Pilihan Skala Nilai -->
+            <div class="scale-selector">
+                <label for="pilihSkala"><strong>Pilih Skala Nilai:</strong></label>
+                <select id="pilihSkala">
+                    <option value="sederhana">Skala 4.0 Sederhana (A, B, C, D, E)</option>
+                    <option value="plusminus">Skala Plus/Minus (A, A-, B+, B, B-, C+, C, D, E)</option>
+                </select>
+            </div>
+
+            <!-- Tabel Input Mata Kuliah -->
+            <div class="input-section">
+                <div class="input-header">
+                    <span class="col-nama">Nama Mata Kuliah</span>
+                    <span class="col-sks">SKS</span>
+                    <span class="col-nilai">Nilai</span>
+                    <span class="col-aksi"></span>
+                </div>
+                <div id="daftarMatakuliah">
+                    <!-- Baris mata kuliah akan ditambahkan di sini oleh JavaScript -->
+                </div>
+                <button type="button" class="btn btn-secondary" id="tambahBaris">+ Tambah Mata Kuliah</button>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="action-buttons">
+                <button type="button" class="btn btn-primary" id="hitungBtn">Hitung IPK</button>
+                <button type="button" class="btn btn-secondary" id="resetBtn">Reset</button>
+            </div>
+
+            <!-- Hasil -->
+            <div class="hasil" id="hasil" hidden>
+                <div class="hasil-ipk">
+                    <span class="hasil-label">IPK Kamu</span>
+                    <span class="hasil-angka" id="nilaiIPK">0.00</span>
+                </div>
+                <div class="hasil-detail">
+                    <div class="hasil-item">
+                        <span class="hasil-item-label">Total SKS</span>
+                        <span class="hasil-item-angka" id="totalSKS">0</span>
+                    </div>
+                    <div class="hasil-item">
+                        <span class="hasil-item-label">Total Bobot</span>
+                        <span class="hasil-item-angka" id="totalBobot">0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pesan Error -->
+            <div class="error-msg" id="pesanError" hidden></div>
+        </section>
+
+        <!-- AREA IKLAN: bawah kalkulator -->
+
+        <!-- KONTEN SEO -->
+        <article class="content">
+            <h2>Apa itu IPK dan IPS?</h2>
+            <p><strong>IPK (Indeks Prestasi Kumulatif)</strong> adalah rata-rata nilai akademik seorang mahasiswa selama menjalani seluruh masa studinya, dihitung dari semester pertama sampai semester terakhir. IPK menjadi salah satu tolok ukur utama prestasi akademik dan sering digunakan sebagai syarat kelulusan, beasiswa, maupun seleksi kerja.</p>
+            <p>Sedangkan <strong>IPS (Indeks Prestasi Semester)</strong> adalah rata-rata nilai yang diperoleh dalam satu semester tertentu. IPS menggambarkan performa kamu dalam satu periode kuliah saja.</p>
+
+            <h2>Rumus Menghitung IPK</h2>
+            <p>Rumus IPK sangat sederhana:</p>
+            <div class="rumus">
+                IPK = Σ (SKS mata kuliah × Bobot nilai) ÷ Σ SKS
+            </div>
+            <p>Artinya, kalikan setiap SKS mata kuliah dengan bobot nilai yang kamu dapatkan, jumlahkan semuanya, lalu bagi dengan total SKS yang kamu ambil.</p>
+
+            <h2>Contoh Perhitungan Langkah demi Langkah</h2>
+            <p>Misalkan dalam satu semester kamu mengambil 3 mata kuliah:</p>
+            <ol>
+                <li>Mata Kuliah A — 3 SKS — nilai <strong>A (4)</strong></li>
+                <li>Mata Kuliah B — 2 SKS — nilai <strong>B (3)</strong></li>
+                <li>Mata Kuliah C — 3 SKS — nilai <strong>B+ (3.3)</strong></li>
+            </ol>
+            <p><strong>Langkah 1:</strong> Hitung bobot masing-masing:</p>
+            <ul>
+                <li>A: 3 × 4 = 12</li>
+                <li>B: 2 × 3 = 6</li>
+                <li>C: 3 × 3.3 = 9.9</li>
+            </ul>
+            <p><strong>Langkah 2:</strong> Jumlahkan bobot = 12 + 6 + 9.9 = <strong>27.9</strong></p>
+            <p><strong>Langkah 3:</strong> Jumlahkan SKS = 3 + 2 + 3 = <strong>8</strong></p>
+            <p><strong>Langkah 4:</strong> IPK = 27.9 ÷ 8 = <strong>3.49</strong></p>
+
+            <h2>Skala Nilai yang Didukung</h2>
+            <p><strong>Skala 4.0 Sederhana:</strong></p>
+            <ul>
+                <li>A = 4</li>
+                <li>B = 3</li>
+                <li>C = 2</li>
+                <li>D = 1</li>
+                <li>E = 0</li>
+            </ul>
+            <p><strong>Skala Plus/Minus:</strong></p>
+            <ul>
+                <li>A = 4.0</li>
+                <li>A- = 3.7</li>
+                <li>B+ = 3.3</li>
+                <li>B = 3.0</li>
+                <li>B- = 2.7</li>
+                <li>C+ = 2.3</li>
+                <li>C = 2.0</li>
+                <li>D = 1.0</li>
+                <li>E = 0</li>
+            </ul>
+
+            <!-- FAQ -->
+            <h2>Pertanyaan yang Sering Diajukan (FAQ)</h2>
+
+            <details class="faq">
+                <summary><strong>Apakah kalkulator ini menyimpan data saya?</strong></summary>
+                <p>Tidak. Seluruh perhitungan dilakukan langsung di browser kamu. Tidak ada data yang dikirim ke server maupun disimpan di mana pun. Begitu kamu menutup halaman, data input akan hilang.</p>
+            </details>
+
+            <details class="faq">
+                <summary><strong>Apakah skala nilai di kalkulator ini sama dengan kampus saya?</strong></summary>
+                <p>Kalkulator ini menggunakan skala umum yang banyak dipakai di perguruan tinggi Indonesia. Namun, beberapa kampus memiliki skala nilai yang sedikit berbeda (misalnya nilai A = 4.0, AB = 3.5, atau ada nilai AB+/BC+). Selalu cek pedoman akademik kampusmu untuk kepastian.</p>
+            </details>
+
+            <details class="faq">
+                <summary><strong>Berapa IPK yang dianggap bagus?</strong></summary>
+                <p>Secara umum di Indonesia, IPK di atas 3.50 dianggap sangat baik, 3.00–3.49 baik, 2.50–2.99 cukup, dan di bawah 2.50 perlu perbaikan. Namun, standar ini bisa berbeda tergantung kampus dan program studi.</p>
+            </details>
+
+            <details class="faq">
+                <summary><strong>Apakah kalkulator ini bisa dipakai di HP?</strong></summary>
+                <p>Bisa. Website ini dirancang dengan pendekatan <em>mobile-first</em>, sehingga tampilannya otomatis menyesuaikan layar HP, tablet, maupun komputer.</p>
+            </details>
+
+            <details class="faq">
+                <summary><strong>Bagaimana jika saya salah memasukkan nilai?</strong></summary>
+                <p>Kamu bisa langsung menghapus baris mata kuliah dengan tombol hapus (🗑️) di sebelah kanan, atau tekan tombol <strong>Reset</strong> untuk mengosongkan seluruh isian.</p>
+            </details>
+
+            <!-- PERINGATAN -->
+            <div class="peringatan">
+                <strong>⚠️ Peringatan:</strong> Hasil perhitungan di kalkulator ini hanya bersifat perkiraan. Skala nilai, pembulatan, dan kebijakan akademik bisa berbeda di setiap perguruan tinggi. Selalu gunakan hasil resmi dari akademik kampusmu sebagai acuan utama.
+            </div>
+        </article>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="tentang.html">Tentang</a>
+                <a href="kontak.html">Kontak</a>
+                <a href="kebijakan-privasi.html">Kebijakan Privasi</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </nav>
+            <p class="copyright">© 2026 Hitungku. Semua perhitungan dilakukan di browser Anda.</p>
+        </div>
+    </footer>
+
+    <!-- Script Kalkulator -->
+    <script src="script-ipk.js"></script>
+</body>
+</html>
