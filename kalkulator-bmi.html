@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator BMI Dewasa Gratis - Hitungku</title>
+    <meta name="description" content="Hitung Body Mass Index (BMI) kamu secara gratis di Hitungku. Kalkulator BMI khusus dewasa (18+ tahun) dengan kategori standar WHO. Cepat, privat, tanpa daftar.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo">🧮 Hitungku</a>
+            <nav class="main-nav">
+                <a href="index.html">Beranda</a>
+                <a href="tentang.html">Tentang</a>
+                <a href="kontak.html">Kontak</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- AREA IKLAN: atas kalkulator -->
+
+        <!-- JUDUL HALAMAN -->
+        <section class="page-intro">
+            <h1>Kalkulator BMI Dewasa</h1>
+            <p>Hitung <strong>Body Mass Index (BMI)</strong> atau Indeks Massa Tubuh kamu dengan cepat. Alat ini dirancang khusus untuk membantu kamu memahami proporsi berat badan terhadap tinggi badan.</p>
+        </section>
+
+        <!-- PERINGATAN USIA (MENCOLOK) -->
+        <div class="peringatan" style="border-left: 5px solid #c0392b; background-color: #fdedec; margin-bottom: 24px;">
+            <strong>⚠️ Peringatan Penting:</strong> Kalkulator ini hanya untuk orang dewasa berusia 18 tahun ke atas. Kategori BMI untuk anak dan remaja berbeda dan tidak bisa dihitung dengan cara ini.
+        </div>
+
+        <!-- KALKULATOR -->
+        <section class="calculator" id="kalkulatorBMI">
+            <div class="input-section">
+                <div class="baris-mk" style="grid-template-columns: 1fr 1fr 1fr 40px; border-bottom: none; padding-bottom: 12px;">
+                    <div>
+                        <label for="inputUsia" style="display:block; font-size:14px; margin-bottom:4px; color:var(--warna-teks-redup);">Usia (Tahun)</label>
+                        <input type="number" id="inputUsia" min="18" max="120" step="1" placeholder="cth: 25" required>
+                    </div>
+                    <div>
+                        <label for="inputBerat" style="display:block; font-size:14px; margin-bottom:4px; color:var(--warna-teks-redup);">Berat (kg)</label>
+                        <input type="number" id="inputBerat" min="20" max="300" step="0.1" placeholder="cth: 65" required>
+                    </div>
+                    <div>
+                        <label for="inputTinggi" style="display:block; font-size:14px; margin-bottom:4px; color:var(--warna-teks-redup);">Tinggi (cm)</label>
+                        <input type="number" id="inputTinggi" min="100" max="250" step="1" placeholder="cth: 170" required>
+                    </div>
+                    <div style="display:flex; align-items:flex-end; padding-bottom:2px;">
+                        <!-- Spacer untuk alignment -->
+                   9</div>
+                </div>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="action-buttons">
+                <button type="button" class="btn btn-primary" id="hitungBMIBtn">Hitung BMI</button>
+                <button type="button" class="btn btn-secondary" id="resetBMIBtn">Reset</button>
+            </div>
+
+            <!-- Hasil -->
+            <div class="hasil" id="hasilBMI" hidden>
+                <div class="hasil-ipk">
+                    <span class="hasil-label">Hasil BMI Kamu</span>
+                    <span class="hasil-angka" id="nilaiBMI">0.0</span>
+                    <span class="hasil-label" id="kategoriBMI" style="margin-top: 8px; font-size: 18px; color: var(--warna-utama-tua); font-weight: 600;">-</span>
+                </div>
+                <div class="hasil-detail">
+                    <div class="hasil-item">
+                        <span class="hasil-item-label">Usia</span>
+                        <span class="hasil-item-angka" id="detailUsia">0 tahun</span>
+                    </div>
+                    <div class="ati>
+        </article>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="tentang.html">Tentang</a>
+                <a href="kontak.html">Kontak</a>
+                <a href="kebijakan-privasi.html">Kebijakan Privasi</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </nav>
+            <p class="copyright">© 2026 Hitungku. Semua perhitungan dilakukan di browser kamu.</p>
+        </div>
+    </footer>
+
+    <!-- Script Kalkulator BMI -->
+    <script src="script-bmi.js"></script>
+</body>
+</html>
