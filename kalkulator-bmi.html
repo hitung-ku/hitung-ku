@@ -6,6 +6,54 @@
     <title>Kalkulator BMI Dewasa Gratis - Hitungku</title>
     <meta name="description" content="Hitung Body Mass Index (BMI) kamu secara gratis di Hitungku. Kalkulator BMI khusus dewasa (18+ tahun) dengan kategori standar WHO. Cepat, privat, tanpa daftar.">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Gaya khusus halaman BMI */
+        .peringatan-dewasa {
+            background: #fdecea;
+            border: 1px solid #f5b7b1;
+            border-left: 5px solid var(--warna-error);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 8px 0 16px;
+            font-size: 15px;
+            color: #7b241c;
+        }
+        .bmi-fields {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+        .bmi-fields label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .bmi-fields input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid var(--warna-batas);
+            border-radius: 8px;
+            background: #fff;
+            color: var(--warna-teks);
+        }
+        .bmi-fields input:focus {
+            outline: 2px solid var(--warna-aksen);
+            outline-offset: 1px;
+            border-color: var(--warna-aksen);
+        }
+        .hasil-kategori {
+            display: block;
+            margin-top: 8px;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--warna-utama-tua);
+        }
+        @media (min-width: 600px) {
+            .bmi-fields { grid-template-columns: 1fr 1fr 1fr; }
+        }
+    </style>
 </head>
 <body>
     <!-- HEADER -->
@@ -26,33 +74,28 @@
         <!-- JUDUL HALAMAN -->
         <section class="page-intro">
             <h1>Kalkulator BMI Dewasa</h1>
-            <p>Hitung <strong>Body Mass Index (BMI)</strong> atau Indeks Massa Tubuh kamu dengan cepat. Alat ini dirancang khusus untuk membantu kamu memahami proporsi berat badan terhadap tinggi badan.</p>
+            <p>Hitung <strong>Body Mass Index (BMI)</strong> atau Indeks Massa Tubuh kamu dengan cepat. Isi usia, berat, dan tinggi badan, lalu hasilnya langsung muncul. Hitungan berjalan di browser kamu dan tidak disimpan.</p>
         </section>
 
-        <!-- PERINGATAN USIA (MENCOLOK) -->
-        <div class="peringatan" style="border-left: 5px solid #c0392b; background-color: #fdedec; margin-bottom: 24px;">
+        <!-- PERINGATAN KHUSUS DEWASA -->
+        <div class="peringatan-dewasa">
             <strong>⚠️ Peringatan Penting:</strong> Kalkulator ini hanya untuk orang dewasa berusia 18 tahun ke atas. Kategori BMI untuk anak dan remaja berbeda dan tidak bisa dihitung dengan cara ini.
         </div>
 
         <!-- KALKULATOR -->
-        <section class="calculator" id="kalkulatorBMI">
-            <div class="input-section">
-                <div class="baris-mk" style="grid-template-columns: 1fr 1fr 1fr 40px; border-bottom: none; padding-bottom: 12px;">
-                    <div>
-                        <label for="inputUsia" style="display:block; font-size:14px; margin-bottom:4px; color:var(--warna-teks-redup);">Usia (Tahun)</label>
-                        <input type="number" id="inputUsia" min="18" max="120" step="1" placeholder="cth: 25" required>
-                    </div>
-                    <div>
-                        <label for="inputBerat" style="display:block; font-size:14px; margin-bottom:4px; color:var(--warna-teks-redup);">Berat (kg)</label>
-                        <input type="number" id="inputBerat" min="20" max="300" step="0.1" placeholder="cth: 65" required>
-                    </div>
-                    <div>
-                        <label for="inputTinggi" style="display:block; font-size:14px; margin-bottom:4px; color:var(--warna-teks-redup);">Tinggi (cm)</label>
-                        <input type="number" id="inputTinggi" min="100" max="250" step="1" placeholder="cth: 170" required>
-                    </div>
-                    <div style="display:flex; align-items:flex-end; padding-bottom:2px;">
-                        <!-- Spacer untuk alignment -->
-                   9</div>
+        <section class="calculator" id="kalkulator">
+            <div class="bmi-fields">
+                <div>
+                    <label for="inputUsia">Usia (tahun)</label>
+                    <input type="text" id="inputUsia" inputmode="numeric" placeholder="cth: 25" autocomplete="off">
+                </div>
+                <div>
+                    <label for="inputBerat">Berat badan (kg)</label>
+                    <input type="text" id="inputBerat" inputmode="decimal" placeholder="cth: 65" autocomplete="off">
+                </div>
+                <div>
+                    <label for="inputTinggi">Tinggi badan (cm)</label>
+                    <input type="text" id="inputTinggi" inputmode="decimal" placeholder="cth: 170" autocomplete="off">
                 </div>
             </div>
 
@@ -65,16 +108,95 @@
             <!-- Hasil -->
             <div class="hasil" id="hasilBMI" hidden>
                 <div class="hasil-ipk">
-                    <span class="hasil-label">Hasil BMI Kamu</span>
+                    <span class="hasil-label">BMI Kamu</span>
                     <span class="hasil-angka" id="nilaiBMI">0.0</span>
-                    <span class="hasil-label" id="kategoriBMI" style="margin-top: 8px; font-size: 18px; color: var(--warna-utama-tua); font-weight: 600;">-</span>
+                    <span class="hasil-kategori" id="kategoriBMI"></span>
                 </div>
                 <div class="hasil-detail">
                     <div class="hasil-item">
-                        <span class="hasil-item-label">Usia</span>
-                        <span class="hasil-item-angka" id="detailUsia">0 tahun</span>
+                        <span class="hasil-item-label">Berat badan</span>
+                        <span class="hasil-item-angka" id="detailBerat">-</span>
                     </div>
-                    <div class="ati>
+                    <div class="hasil-item">
+                        <span class="hasil-item-label">Tinggi badan</span>
+                        <span class="hasil-item-angka" id="detailTinggi">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pesan khusus usia di bawah 18 -->
+            <div class="peringatan" id="pesanKhususRemaja" hidden>
+                <strong>Kalkulator ini hanya untuk usia 18 tahun ke atas.</strong> Untuk anak dan remaja, silakan konsultasikan ke dokter atau puskesmas.
+            </div>
+
+            <!-- Pesan Error -->
+            <div class="error-msg" id="pesanErrorBMI" hidden></div>
+        </section>
+
+        <!-- AREA IKLAN: bawah kalkulator -->
+
+        <!-- KONTEN SEO -->
+        <article class="content">
+            <h2>Apa itu BMI?</h2>
+            <p><strong>BMI (Body Mass Index)</strong> atau Indeks Massa Tubuh adalah angka yang membandingkan berat badan dengan tinggi badan. Angka ini dipakai sebagai gambaran kasar apakah berat badan seseorang tergolong kurus, normal, atau berlebih.</p>
+            <p>BMI mudah dihitung dan tidak butuh alat khusus, sehingga sering dipakai sebagai langkah awal untuk melihat proporsi tubuh orang dewasa.</p>
+
+            <h2>Rumus Menghitung BMI</h2>
+            <div class="rumus">
+                BMI = berat badan (kg) ÷ [tinggi badan (m) × tinggi badan (m)]
+            </div>
+            <p>Tinggi badan harus diubah dari sentimeter ke meter dulu. Misalnya 170 cm menjadi 1,70 m. Kalkulator di atas melakukan perubahan ini otomatis, kamu cukup mengisi tinggi dalam sentimeter.</p>
+
+            <h2>Contoh Perhitungan Langkah demi Langkah</h2>
+            <p>Misalkan berat badan 65 kg dan tinggi badan 170 cm:</p>
+            <ol>
+                <li>Ubah tinggi ke meter: 170 cm = 1,70 m.</li>
+                <li>Kuadratkan tinggi: 1,70 × 1,70 = 2,89.</li>
+                <li>Bagi berat dengan hasil itu: 65 ÷ 2,89 = 22,49.</li>
+                <li>Dibulatkan satu angka desimal, BMI-nya <strong>22,5</strong>, termasuk kategori <strong>Normal</strong>.</li>
+            </ol>
+
+            <h2>Kategori BMI untuk Dewasa</h2>
+            <p>Kalkulator ini memakai batas kategori dewasa dari WHO:</p>
+            <ul>
+                <li>Di bawah 18,5: Kurus</li>
+                <li>18,5 sampai 24,9: Normal</li>
+                <li>25,0 sampai 29,9: Berat badan berlebih</li>
+                <li>30,0 ke atas: Obesitas</li>
+            </ul>
+
+            <!-- FAQ -->
+            <h2>Pertanyaan yang Sering Diajukan (FAQ)</h2>
+
+            <details class="faq">
+                <summary><strong>Apakah data yang saya isi disimpan?</strong></summary>
+                <p>Tidak. Seluruh perhitungan berjalan di browser kamu. Usia, berat, dan tinggi badan yang kamu ketik tidak dikirim ke server dan tidak disimpan. Begitu halaman ditutup atau dimuat ulang, isiannya hilang.</p>
+            </details>
+
+            <details class="faq">
+                <summary><strong>Kenapa kalkulator ini hanya untuk usia 18 tahun ke atas?</strong></summary>
+                <p>Anak dan remaja masih tumbuh, sehingga kategori BMI mereka bergantung pada usia dan jenis kelamin. Batas kategori dewasa tidak cocok untuk mereka. Untuk anak dan remaja, konsultasikan ke dokter atau puskesmas.</p>
+            </details>
+
+            <details class="faq">
+                <summary><strong>Apakah BMI selalu akurat?</strong></summary>
+                <p>Tidak. BMI tidak membedakan otot dan lemak, jadi orang yang berotot bisa memiliki BMI tinggi padahal lemak tubuhnya rendah. BMI juga kurang tepat untuk ibu hamil dan lansia.</p>
+            </details>
+
+            <details class="faq">
+                <summary><strong>Kalau BMI saya normal, berarti pasti sehat?</strong></summary>
+                <p>Belum tentu. BMI hanya satu gambaran kasar. Kesehatan juga dipengaruhi pola makan, aktivitas fisik, kualitas tidur, dan faktor lain yang tidak terukur oleh BMI.</p>
+            </details>
+
+            <details class="faq">
+                <summary><strong>Apakah semua lembaga memakai batas BMI yang sama?</strong></summary>
+                <p>Tidak selalu. Sebagian lembaga kesehatan memakai batas yang sedikit berbeda, termasuk untuk populasi Asia. Kalkulator ini memakai batas dewasa dari WHO. Untuk penilaian yang tepat, tanyakan ke tenaga kesehatan.</p>
+            </details>
+
+            <!-- PERINGATAN -->
+            <div class="peringatan">
+                <strong>⚠️ Peringatan:</strong> Hasil kalkulator ini hanya perkiraan, bukan diagnosis, dan tidak menggantikan saran dokter atau ahli gizi. Jika ada kekhawatiran tentang berat badan atau kesehatanmu, konsultasikan dengan tenaga kesehatan.
+            </div>
         </article>
     </main>
 
@@ -91,7 +213,7 @@
         </div>
     </footer>
 
-    <!-- Script Kalkulator BMI -->
+    <!-- Script Kalkulator -->
     <script src="script-bmi.js"></script>
 </body>
 </html>

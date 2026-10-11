@@ -1,6 +1,7 @@
 /* ============================================
    SCRIPT-BMI.JS
    Logika kalkulator BMI Dewasa - murni JavaScript
+   Hitungku
    ============================================ */
 
 // --- AMBIL ELEMEN DARI DOM ---
@@ -13,14 +14,39 @@ const resetBMIBtn = document.getElementById('resetBMIBtn');
 const hasilBMI = document.getElementById('hasilBMI');
 const nilaiBMI = document.getElementById('nilaiBMI');
 const kategoriBMI = document.getElementById('kategoriBMI');
-const detailUsia = document.getElementById('detailUsia');
 const detailBerat = document.getElementById('detailBerat');
 const detailTinggi = document.getElementById('detailTinggi');
 
 const pesanError = document.getElementById('pesanErrorBMI');
 const pesanKhususRemaja = document.getElementById('pesanKhususRemaja');
 
-// --- FUNGSI: TAMPILKAN ERROR ---
+// --- FUNGSI: BACA ANGKA DARI TEKS ---
+// Menerima titik atau koma sebagai pemisah desimal (cth: 65,5 atau 65.5).
+// Mengembalikan NaN jika bukan angka yang valid.
+function bacaAngka(teks) {
+    const bersih = String(teks).trim().replace(',', '.');
+    if (!/^\d+(\.\d+)?$/.test(bersih)) {
+        return NaN;
+    }
+    return Number(bersih);
+}
+
+// --- FUNGSI: FORMAT ANGKA KE GAYA INDONESIA (koma desimal) ---
+function formatAngka(angka) {
+    return String(angka).replace('.', ',');
+}
+
+// --- FUNGSI: TENTUKAN KATEGORI (Standar WHO Dewasa) ---
+// Kategori dihitung dari angka yang sudah dibulatkan 1 desimal,
+// supaya angka yang tampil dan kategorinya selalu sesuai.
+function tentukanKategori(bmiBulat) {
+    if (bmiBulat < 18.5) return 'Kurus';
+    if (bmiBulat < 25) return 'Normal';
+    if (bmiBulat < 30) return 'Berat badan berlebih';
+    return 'Obesitas';
+}
+
+// --- FUNGSI: TAMPILKAN / SEMBUNYIKAN PESAN ---
 function tampilkanError(pesan) {
     pesanError.textContent = pesan;
     pesanError.hidden = false;
@@ -28,73 +54,61 @@ function tampilkanError(pesan) {
     pesanKhususRemaja.hidden = true;
 }
 
-// --- FUNGSI: SEMBUNYIKAN ERROR ---
-function sembunyikanError() {
+function sembunyikanSemuaPesan() {
     pesanError.hidden = true;
     pesanError.textContent = '';
+    pesanKhususRemaja.hidden = true;
+    hasilBMI.hidden = true;
 }
 
 // --- FUNGSI UTAMA: HITUNG BMI ---
 function hitungBMI() {
-    sembunyikanError();
-    pesanKhususRemaja.hidden = true;
-    hasilBMI.hidden = true;
+    sembunyikanSemuaPesan();
 
-    // Ambil nilai dan ubah ke angka
-    const usia = parseInt(inputUsia.value, 10);
-    const berat = parseFloat(inputBerat.value);
-    const tinggi = parseFloat(inputTinggi.value);
+    const usiaTeks = inputUsia.value.trim();
+    const berat = bacaAngka(inputBerat.value);
+    const tinggi = bacaAngka(inputTinggi.value);
 
-    // 1. Validasi Kosong
-    if (isNaN(usia) || isNaN(berat) || isNaN(tinggi)) {
-        tampilkanError('Mohon isi semua kolom (Usia, Berat, dan Tinggi Badan) dengan angka yang valid.');
+    // 1. Validasi isian
+    if (!/^\d+$/.test(usiaTeks) || isNaN(berat) || isNaN(tinggi)) {
+        tampilkanError('Mohon isi usia (angka bulat), berat badan, dan tinggi badan dengan angka yang valid.');
         return;
     }
 
-    // 2. Validasi Rentang Angka
-    if (usia < 18 || usia > 120 || !Number.isInteger(usia)) {
-        tampilkanError('Usia harus berupa angka bulat antara 18 hingga 120 tahun.');
-        return;
-    }
-    if (berat < 20 || berat > 300) {
-        tampilkanError('Berat badan harus berada di antara 20 kg hingga 300 kg.');
-        return;
-    }
-    if (tinggi < 100 || tinggi > 250) {
-        tampilkanError('Tinggi badan harus berada di antara 100 cm hingga 250 cm.');
+    const usia = parseInt(usiaTeks, 10);
+
+    // 2. Validasi usia
+    if (usia < 1 || usia > 120) {
+        tampilkanError('Usia harus berupa angka antara 1 sampai 120 tahun.');
         return;
     }
 
-    // 3. Logika Khusus Usia < 18 (Double check, meski HTML min="18" sudah membatasi)
+    // 3. Usia di bawah 18: tidak tampilkan angka, hanya pesan khusus
     if (usia < 18) {
         pesanKhususRemaja.hidden = false;
         return;
     }
 
-    // 4. Perhitungan BMI
-    const tinggiMeter = tinggi / 100;
-    const bmi = berat / (tinggiMeter * tinggiMeter);
-    const bmiRounded = bmi.toFixed(1); // 1 angka desimal
-
-    // 5. Tentukan Kategori (Standar WHO Dewasa)
-    let kategori = '';
-    if (bmi < 18.5) {
-        kategori = 'Kurus (Underweight)';
-    } else if (bmi >= 18.5 && bmi <= 24.9) {
-        kategori = 'Normal';
-    } else if (bmi >= 25.0 && bmi <= 29.9) {
-        kategori = 'Berat Badan Berlebih (Overweight)';
-    } else {
-        kategori = 'Obesitas';
+    // 4. Validasi berat dan tinggi
+    if (berat < 20 || berat > 300) {
+        tampilkanError('Berat badan harus berada di antara 20 kg sampai 300 kg.');
+        return;
+    }
+    if (tinggi < 100 || tinggi > 250) {
+        tampilkanError('Tinggi badan harus berada di antara 100 cm sampai 250 cm.');
+        return;
     }
 
-    // 6. Tampilkan Hasil
-    nilaiBMI.textContent = bmiRounded;
-    kategoriBMI.textContent = kategori;
-    detailUsia.textContent = `${usia} tahun`;
-    detailBerat.textContent = `${berat} kg`;
-    detailTinggi.textContent = `${tinggi} cm`;
-    
+    // 5. Hitung BMI
+    const tinggiMeter = tinggi / 100;
+    const bmi = berat / (tinggiMeter * tinggiMeter);
+    const bmiBulat = Math.round(bmi * 10) / 10; // 1 angka desimal
+
+    // 6. Tampilkan hasil
+    nilaiBMI.textContent = bmiBulat.toFixed(1).replace('.', ',');
+    kategoriBMI.textContent = tentukanKategori(bmiBulat);
+    detailBerat.textContent = formatAngka(berat) + ' kg';
+    detailTinggi.textContent = formatAngka(tinggi) + ' cm';
     hasilBMI.hidden = false;
 
     // Scroll ke hasil agar terlihat di HP
@@ -106,9 +120,7 @@ function resetBMI() {
     inputUsia.value = '';
     inputBerat.value = '';
     inputTinggi.value = '';
-    sembunyikanError();
-    pesanKhususRemaja.hidden = true;
-    hasilBMI.hidden = true;
+    sembunyikanSemuaPesan();
     inputUsia.focus();
 }
 
@@ -116,11 +128,11 @@ function resetBMI() {
 hitungBMIBtn.addEventListener('click', hitungBMI);
 resetBMIBtn.addEventListener('click', resetBMI);
 
-// Opsional: Hitung saat tekan Enter di input
-[inputUsia, inputBerat, inputTinggi].forEach(input => {
-    input.addEventListener('keypress', function (e) {
+// Tekan Enter di kolom isian untuk menghitung
+[inputUsia, inputBerat, inputTinggi].forEach(function (input) {
+    input.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
             hitungBMI();
         }
- });
+    });
 });
