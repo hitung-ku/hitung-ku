@@ -1,81 +1,1154 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <!-- Viewport agar responsif di HP -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hitungku - Kalkulator Gratis untuk Kebutuhan Sehari-hari</title>
-    <meta name="description" content="Kumpulan kalkulator gratis untuk kebutuhan sehari-hari. Hitung IPK dan alat bantu lainnya dengan cepat, akurat, dan tanpa perlu daftar.">
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- =====================================================================
+     CONFIG — SEMUA ISI & ANGKA ADA DI SINI.
+     Ubah di sini saja, halaman akan ikut berubah (WA, kuota, portofolio, FAQ).
+     Tidak ada angka acak dan tidak ada countdown palsu.
+     ===================================================================== -->
+<script>
+const CONFIG = {
+  merek: "Hitungku",
+
+  // Nomor WhatsApp format internasional tanpa "+" / spasi / angka 0 di depan.
+  nomorWA: "6285700677379",
+
+  // Pesan awal yang otomatis terisi saat tombol WhatsApp diklik.
+  pesanAwal: "Halo Hitungku, saya mau minta contoh halaman online gratis untuk usaha saya. Nama usaha: ",
+  pesanTanya: "Halo Hitungku, saya mau tanya soal halaman online gratis.",
+
+  // Kuota slot gratis. kuotaSisa harus <= kuotaTotal. Progress bar mengikuti angka ini.
+  kuotaTotal: 10,
+  kuotaSisa: 9,
+
+  // Jumlah klien yang halamannya sudah tayang (tampil di bagian portofolio).
+  jumlahKlienTayang: 1,
+
+  // Alamat footer.
+  lokasi: "Dusun Gendol, Kajoran, Magelang",
+
+  // Tulisan pita berjalan di bawah hero.
+  marquee: ["MENU", "HARGA", "JAM BUKA", "PETA", "PESAN WHATSAPP"],
+
+  // Daftar portofolio. Kalau file gambar belum ada, otomatis tampil blok warna.
+  // Letakkan file gambar satu folder dengan index.html.
+  portofolio: [
+    {
+      nama: "Pojok N Desa",
+      deskripsi: "Klien pertama Hitungku. Halaman online untuk usaha desa yang memuat info usaha dan jalur pesan langsung lewat WhatsApp.",
+      url: "https://pojokndesa.hitungku.my.id",
+      gambar: "portofolio-pojokndesa.jpg"
+    }
+  ],
+
+  // Daftar FAQ (pertanyaan q, jawaban a).
+  faq: [
+    {
+      q: "Beneran gratis? Nggak ada biaya tersembunyi?",
+      a: "Beneran gratis untuk pembuatan halamannya. Alamat web memakai subdomain hitungku.my.id tanpa biaya. Satu-satunya biaya yang mungkin muncul adalah kalau kamu mau domain sendiri (registrasinya kamu yang tanggung) atau minta perubahan besar yang dihitung terpisah, dan itu selalu dibicarakan dulu sebelum dikerjakan."
+    },
+    {
+      q: "Kenapa kok gratis?",
+      a: "Saya sedang membangun portofolio dan senang bantu usaha kecil di sekitar. Kuotanya sengaja dibatasi supaya tiap halaman tetap digarap serius, bukan asal jadi."
+    },
+    {
+      q: "Berapa lama jadinya?",
+      a: "Contoh halaman jadi dalam 1-3 hari setelah kamu kirim bahan. Kamu lihat dulu, kasih masukan, baru kita tayangkan kalau cocok."
+    },
+    {
+      q: "Saya harus siapkan apa?",
+      a: "Cukup nama usaha, alamat, jam buka, daftar menu atau produk beserta harga, beberapa foto, dan nomor WhatsApp yang dipakai pelanggan. Foto dari HP biasa sudah cukup."
+    },
+    {
+      q: "Kalau contohnya nggak cocok?",
+      a: "Nggak bayar dan nggak ada kewajiban apa pun. Kamu bebas pakai atau tinggalkan."
+    },
+    {
+      q: "Boleh pakai nama domain sendiri?",
+      a: "Boleh, misalnya .com atau .id. Biaya registrasi domain ditanggung kamu sendiri, dan saya bantu menyambungkannya ke halamanmu."
+    },
+    {
+      q: "Usaha saya di luar desa atau kecamatan, boleh?",
+      a: "Layanan ini fokus untuk usaha kecil di desa/kecamatan. Kalau usahamu di luar itu, tanya dulu lewat WhatsApp, nanti kita lihat apakah masih bisa."
+    }
+  ]
+};
+</script>
+
+<title>Hitungku — Halaman Online Gratis untuk Usaha Desa &amp; Kecamatan</title>
+<meta name="description" content="Hitungku bikinkan landing page gratis untuk usaha kecil di desa dan kecamatan. Contoh jadi dalam 1-3 hari, nggak cocok nggak bayar. Menu, harga, jam buka, peta, dan tombol pesan WhatsApp.">
+<meta name="theme-color" content="#0B1220">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph dasar -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hitungku">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Hitungku — Halaman Online Gratis untuk Usaha Desa">
+<meta property="og:description" content="Usahamu belum ada di internet? Pelangganmu sudah nyari. Contoh jadi dalam 1-3 hari, nggak cocok nggak bayar.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hitungku — Halaman Online Gratis untuk Usaha Desa">
+<meta name="twitter:description" content="Saya bikinkan halaman online gratis. Contoh jadi dalam 1-3 hari, nggak cocok nggak bayar.">
+
+<!-- Favicon SVG -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1220'/%3E%3Cpath d='M20 16v32M44 16v32M20 32h24' stroke='%2322C55E' stroke-width='7' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ========================= DASAR & WARNA ========================= */
+:root{
+  --bg:#0B1220;
+  --surface:#111A2E;
+  --accent:#22C55E;
+  --text:#E5E7EB;
+  --muted:#94A3B8;
+  --line:rgba(255,255,255,.08);
+  --r:20px;
+  --pad:clamp(20px,5vw,64px);
+  --sec:clamp(72px,12vw,168px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);scroll-behavior:smooth;overflow-x:clip}
+html.is-loading{overflow:hidden}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:var(--bg);color:var(--text);
+  font-size:clamp(16px,.35vw + 14.6px,18px);line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:clip;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+.ic{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{width:min(100% - 2*var(--pad),1320px);margin-inline:auto}
+section{position:relative}
+.sec{padding-block:var(--sec)}
+.kicker{display:inline-flex;align-items:center;gap:12px;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:28px}
+.kicker::before{content:"";width:32px;height:2px;background:var(--accent)}
+.display{font-size:clamp(40px,7.2vw,104px);font-weight:800;letter-spacing:-.045em;line-height:.95}
+.display em{font-style:normal;color:var(--accent)}
+.lead{color:var(--muted);max-width:52ch}
+.muted{color:var(--muted)}
+
+/* Tombol */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  background:var(--accent);color:var(--bg);font-weight:700;
+  padding:18px 30px;border-radius:999px;font-size:clamp(16px,1vw + 12px,18px);
+  transition:background .25s,transform .25s;pointer-events:auto;
+}
+.btn:hover{background:var(--text);transform:translateY(-2px)}
+.btn:focus-visible,.faq-q:focus-visible,.wa-float:focus-visible,.link-line:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.btn.lg{padding:22px 38px;font-size:clamp(17px,1.4vw + 12px,22px)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--surface);transform:translateY(-2px)}
+.link-line{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--accent);border-bottom:1px solid currentColor;padding-bottom:4px}
+
+/* Badge kuota */
+.quota{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px 20px;min-width:min(100%,290px);pointer-events:auto;
+}
+.quota-label{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;margin-bottom:12px}
+.quota-label .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+.quota-label b{color:var(--accent);font-weight:800}
+.track-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.track-bar .fill{height:100%;border-radius:99px;background:var(--accent);width:0}
+
+/* ========================= LOADER ========================= */
+#loader{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center}
+.loader-word{font-size:clamp(48px,13vw,172px);font-weight:800;letter-spacing:-.05em;line-height:1;display:flex;overflow:hidden;padding:.08em .04em}
+.loader-word .ch{display:inline-block;will-change:transform}
+.loader-word .ch:first-child{color:var(--accent)}
+.loader-pct{position:absolute;right:var(--pad);bottom:clamp(20px,4vw,40px);font-size:clamp(40px,8vw,96px);font-weight:800;letter-spacing:-.05em;line-height:1;color:var(--muted);font-variant-numeric:tabular-nums}
+.loader-pct small{font-size:.4em;letter-spacing:0;margin-left:4px}
+.loader-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.loader-note{position:absolute;left:var(--pad);bottom:clamp(24px,4vw,44px);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+/* ========================= HERO ========================= */
+.hero{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;background:var(--bg)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+.hero-glow{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(55% 45% at 50% 38%,rgba(34,197,94,.14),transparent 70%),
+    linear-gradient(to bottom,rgba(11,18,32,0) 62%,#0B1220 100%)}
+.topbar{position:absolute;top:0;left:0;right:0;z-index:5;padding-block:clamp(16px,3vw,28px)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-.04em}
+.logo svg{width:30px;height:30px}
+.top-link{font-size:14px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:10px 18px;background:rgba(17,26,46,.6);transition:background .25s}
+.top-link:hover{background:var(--surface)}
+.hero-content{
+  position:relative;z-index:2;pointer-events:none;
+  min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;
+  padding-top:max(300px,46svh);padding-bottom:clamp(28px,4vw,56px);
+}
+.hero-content a,.hero-content .quota{pointer-events:auto}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.hero-title{font-size:clamp(40px,10.5vw,120px);font-weight:800;letter-spacing:-.05em;line-height:.93;display:flex;flex-direction:column;gap:clamp(8px,2vw,20px)}
+.hero-title .line{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.hero-title .inner{display:block;will-change:transform}
+.hero-title .acc{color:var(--accent)}
+.hero-bottom{display:flex;flex-direction:column;gap:28px;margin-top:clamp(28px,4vw,48px)}
+.hero-sub{color:var(--text);opacity:.88;max-width:34ch;font-size:clamp(18px,1.2vw + 13px,24px);line-height:1.45;font-weight:500}
+.hero-cta{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+@media(min-width:900px){
+  .hero-content{padding-top:clamp(110px,14vh,150px)}
+  .hero-title{flex:1;justify-content:space-between;gap:0}
+  .tt-b{text-align:right}
+  .hero-bottom{flex-direction:row;align-items:flex-end;justify-content:space-between}
+  .hero-cta{flex-direction:row;align-items:center;gap:20px}
+}
+
+/* ========================= MARQUEE ========================= */
+.marquee{background:var(--accent);color:var(--bg);overflow:hidden;padding-block:clamp(14px,2vw,24px);position:relative;z-index:3}
+.marquee .track{display:flex;width:max-content;animation:marq 32s linear infinite}
+.marquee .grp{display:flex;flex:none;white-space:nowrap}
+.marquee span,.marquee i{font-size:clamp(28px,5.4vw,68px);font-weight:800;letter-spacing:-.03em;line-height:1.1;padding-right:.55em;font-style:normal}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ========================= MASALAH ========================= */
+.problem-grid{display:grid;gap:56px}
+.problems{display:grid;gap:clamp(36px,5vw,76px)}
+.pb .num{display:block;font-size:clamp(64px,9vw,132px);font-weight:800;letter-spacing:-.06em;line-height:.9;color:var(--accent);margin-bottom:16px}
+.pb h3{font-size:clamp(26px,3.2vw,42px);font-weight:800;letter-spacing:-.035em;line-height:1.08;margin-bottom:14px}
+.pb p{color:var(--muted);max-width:46ch}
+.pb:nth-child(1){border-top:1px solid var(--line);padding-top:32px;max-width:640px}
+.pb:nth-child(2){background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,4vw,52px);max-width:560px;margin-left:auto}
+.pb:nth-child(3){border-left:2px solid var(--accent);padding-left:clamp(20px,4vw,52px);max-width:600px;margin-left:clamp(0px,6vw,96px)}
+@media(min-width:960px){
+  .problem-grid{grid-template-columns:5fr 7fr;gap:80px;align-items:start}
+  .problem-head{position:sticky;top:96px}
+}
+
+/* ========================= YANG DIDAPAT ========================= */
+.gift-head{display:grid;gap:24px;margin-bottom:clamp(40px,6vw,80px)}
+@media(min-width:960px){.gift-head{grid-template-columns:7fr 4fr;align-items:end;gap:64px}}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.tile{
+  grid-column:1/-1;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:clamp(22px,2.4vw,32px);display:flex;flex-direction:column;justify-content:space-between;gap:36px;min-height:190px;
+}
+.tile .ic{width:34px;height:34px;color:var(--accent)}
+.tile h3{font-size:clamp(20px,1.6vw + 10px,28px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:6px}
+.tile p{color:var(--muted);font-size:.95em;line-height:1.55}
+.tile.t-a{background:var(--accent);color:var(--bg);border-color:transparent;min-height:300px}
+.tile.t-a .ic{color:var(--bg);width:48px;height:48px}
+.tile.t-a h3{font-size:clamp(30px,3.6vw,56px);letter-spacing:-.045em;line-height:1}
+.tile.t-a p{color:var(--bg);opacity:.8;font-size:1em;max-width:34ch}
+.tile.t-f{flex-direction:row;align-items:flex-end;justify-content:space-between}
+@media(min-width:900px){
+  .t-a{grid-column:span 6;grid-row:span 2}
+  .t-b,.t-c,.t-d,.t-e{grid-column:span 3}
+  .t-f,.t-g{grid-column:span 6}
+}
+
+/* ========================= PORTOFOLIO ========================= */
+.porto-head{display:flex;flex-direction:column;gap:20px;margin-bottom:clamp(36px,5vw,64px)}
+.big-number{font-size:clamp(120px,24vw,340px);font-weight:800;letter-spacing:-.08em;line-height:.78;color:var(--accent)}
+.porto-head .lbl{font-size:clamp(20px,2vw + 8px,34px);font-weight:700;letter-spacing:-.03em;line-height:1.15;max-width:14ch}
+.porto-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{grid-column:1/-1;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.shot{aspect-ratio:16/10;background:var(--bg);position:relative;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover}
+.shot.ph{display:grid;place-items:center;background:
+  repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 2px,transparent 2px 22px),var(--bg)}
+.shot.ph span{font-size:clamp(88px,14vw,200px);font-weight:800;letter-spacing:-.07em;color:var(--accent);line-height:1}
+.card-body{padding:clamp(22px,3vw,40px);display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.card-body .tag{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.card-body h3{font-size:clamp(28px,3.2vw,48px);font-weight:800;letter-spacing:-.04em;line-height:1}
+.card-body p{color:var(--muted);max-width:48ch}
+.card.slot{border-style:dashed;justify-content:space-between;padding:clamp(24px,3vw,40px);gap:32px;min-height:280px}
+.card.slot h3{font-size:clamp(30px,3.4vw,52px);font-weight:800;letter-spacing:-.045em;line-height:1}
+.card.slot p{color:var(--muted);margin-top:12px}
+@media(min-width:900px){.porto-head{flex-direction:row;align-items:flex-end;gap:32px}.card.main{grid-column:span 8}.card.slot{grid-column:span 4}}
+
+/* ========================= CARA KERJA ========================= */
+.steps-head{margin-bottom:clamp(32px,5vw,64px)}
+.step{display:grid;grid-template-columns:1fr;gap:12px;padding-block:clamp(28px,4vw,56px);border-top:1px solid var(--line)}
+.step .n{font-size:clamp(88px,16vw,240px);font-weight:800;letter-spacing:-.07em;line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--accent)}
+.step:last-child .n{color:var(--accent);-webkit-text-stroke:0}
+.step h3{font-size:clamp(26px,3.2vw,44px);font-weight:800;letter-spacing:-.035em;line-height:1.08;margin-bottom:10px}
+.step p{color:var(--muted);max-width:46ch}
+@media(min-width:760px){
+  .step{grid-template-columns:auto 1fr;align-items:end;gap:clamp(24px,5vw,80px)}
+  .step:nth-child(odd){padding-left:clamp(0px,14vw,240px)}
+}
+
+/* ========================= SYARAT ========================= */
+.terms{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(28px,5vw,80px);display:grid;gap:40px}
+.terms h2{font-size:clamp(36px,5.4vw,76px);font-weight:800;letter-spacing:-.045em;line-height:.98}
+.terms ul{list-style:none;display:grid;gap:0}
+.terms li{display:flex;gap:18px;align-items:flex-start;padding-block:22px;border-top:1px solid var(--line)}
+.terms li:first-child{border-top:0;padding-top:0}
+.terms li .chk{width:32px;height:32px;border-radius:50%;border:1px solid var(--accent);display:grid;place-items:center;color:var(--accent);flex:none;margin-top:2px}
+.terms li .chk .ic{width:16px;height:16px;stroke-width:2.4}
+.terms li b{display:block;font-size:1.08em;margin-bottom:2px}
+.terms li span{color:var(--muted)}
+@media(min-width:960px){.terms{grid-template-columns:5fr 7fr;gap:80px}}
+
+/* ========================= FAQ ========================= */
+.faq-grid{display:grid;gap:44px}
+.faq-item{border-top:1px solid var(--line)}
+.faq-item:last-child{border-bottom:1px solid var(--line)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:24px;padding-block:clamp(20px,2.4vw,32px);font-size:clamp(19px,1.6vw + 9px,30px);font-weight:700;letter-spacing:-.025em;line-height:1.2}
+.faq-ic{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;flex:none;color:var(--accent);transition:transform .35s,background .25s}
+.faq-item.open .faq-ic{transform:rotate(45deg);background:var(--surface)}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a>div{overflow:hidden}
+.faq-a p{color:var(--muted);padding-bottom:clamp(20px,2.4vw,32px);max-width:62ch}
+@media(min-width:960px){.faq-grid{grid-template-columns:4fr 8fr;gap:80px;align-items:start}.faq-head{position:sticky;top:96px}}
+
+/* ========================= PENUTUP ========================= */
+.closing{padding-block:var(--sec);border-top:1px solid var(--line);overflow:hidden}
+.closing h2{font-size:clamp(48px,11.4vw,176px);font-weight:800;letter-spacing:-.055em;line-height:.9;margin-bottom:clamp(32px,5vw,64px)}
+.closing h2 em{font-style:normal;color:var(--accent);display:block}
+.closing-row{display:flex;flex-direction:column;gap:28px}
+.closing-row .lead{max-width:36ch}
+@media(min-width:900px){.closing-row{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+.closing-act{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+@media(min-width:900px){.closing-act{flex-direction:row;align-items:center;gap:24px}}
+
+/* ========================= FOOTER ========================= */
+footer{border-top:1px solid var(--line);padding-block:clamp(36px,5vw,64px) clamp(96px,10vw,120px)}
+.foot{display:grid;gap:32px}
+.foot .logo{font-size:28px}
+.foot p{color:var(--muted);font-size:15px}
+.foot nav{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:15px;font-weight:600}
+.foot nav a:hover{color:var(--accent)}
+@media(min-width:900px){.foot{grid-template-columns:1.3fr 1fr 1fr;align-items:start}}
+
+/* ========================= WA MENGAMBANG ========================= */
+.wa-float{
+  position:fixed;right:clamp(16px,3vw,28px);bottom:clamp(16px,3vw,28px);z-index:60;
+  width:62px;height:62px;border-radius:50%;background:var(--accent);color:var(--bg);
+  display:grid;place-items:center;border:1px solid rgba(255,255,255,.08);
+  transition:transform .25s,background .25s;
+}
+.wa-float:hover{transform:scale(1.08);background:var(--text)}
+.wa-float svg{width:32px;height:32px}
+.wa-float::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:ping 2.8s ease-out infinite}
+@keyframes ping{0%{transform:scale(.85);opacity:.55}100%{transform:scale(1.35);opacity:0}}
+</style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header class="site-header">
-        <div class="container">
-            <a href="index.html" class="logo">🧮 Hitungku</a>
-            <nav class="main-nav">
-                <a href="index.html">Beranda</a>
-                <a href="tentang.html">Tentang</a>
-                <a href="kontak.html">Kontak</a>
-            </nav>
+
+<!-- ========================= LOADER ========================= -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-word" id="loaderWord"></div>
+  <div class="loader-note">Menyiapkan halaman</div>
+  <div class="loader-pct"><span id="loaderPct">000</span><small>%</small></div>
+  <div class="loader-bar" id="loaderBar"></div>
+</div>
+
+<main>
+<!-- ========================= HERO ========================= -->
+<section class="hero" id="hero">
+  <!-- BAGIAN THREE.JS: canvas fullscreen di belakang teks hero -->
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="hero-glow"></div>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a href="#hero" class="logo" aria-label="Hitungku">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#111A2E"/><path d="M20 16v32M44 16v32M20 32h24" stroke="#22C55E" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
+        Hitungku
+      </a>
+      <a href="#" class="top-link" data-wa="tanya">Chat WhatsApp</a>
+    </div>
+  </header>
+
+  <div class="wrap hero-content">
+    <p class="eyebrow">Landing page gratis untuk usaha desa &amp; kecamatan</p>
+
+    <h1 class="hero-title" aria-label="Usahamu Belum Ada di Internet? Pelangganmu Sudah Nyari.">
+      <span class="tt tt-a" aria-hidden="true">
+        <span class="line"><span class="inner">Usahamu Belum</span></span>
+        <span class="line"><span class="inner">Ada di Internet?</span></span>
+      </span>
+      <span class="tt tt-b" aria-hidden="true">
+        <span class="line"><span class="inner">Pelangganmu</span></span>
+        <span class="line"><span class="inner acc">Sudah Nyari.</span></span>
+      </span>
+    </h1>
+
+    <div class="hero-bottom">
+      <p class="hero-sub">Saya bikinkan halaman online gratis. Contoh jadi dalam 1-3 hari, nggak cocok nggak bayar.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn lg" data-wa="contoh">
+          Minta Contoh Gratis
+          <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <div class="quota" data-quota>
+          <div class="quota-label"><span class="dot"></span><span class="quota-text">Tersisa <b data-bind="kuotaSisa"></b> dari <b data-bind="kuotaTotal"></b> slot gratis</span></div>
+          <div class="track-bar" role="progressbar" aria-label="Sisa slot gratis"><div class="fill"></div></div>
         </div>
-    </header>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- KONTEN UTAMA -->
-    <main class="container">
-        <section class="hero">
-            <h1>Hitungku</h1>
-            <p>Kumpulan kalkulator gratis untuk kebutuhan sehari-hari. Ringan, cepat, dan bisa langsung dipakai tanpa perlu daftar.</p>
-        </section>
+<!-- ========================= MARQUEE ========================= -->
+<div class="marquee" aria-label="Menu, harga, jam buka, peta, pesan WhatsApp">
+  <div class="track" id="marqueeTrack"></div>
+</div>
 
-        <!-- DAFTAR KALKULATOR -->
-        <!-- AREA IKLAN: atas daftar kalkulator -->
+<!-- ========================= MASALAH ========================= -->
+<section class="sec" id="masalah">
+  <div class="wrap problem-grid">
+    <div class="problem-head">
+      <span class="kicker">Masalahnya</span>
+      <h2 class="display">Pelanggan <em>nyari.</em> Kamu nggak ketemu.</h2>
+    </div>
+    <div class="problems">
+      <article class="pb">
+        <span class="num">01</span>
+        <h3>Dicari di Google, nggak ketemu.</h3>
+        <p>Orang lagi butuh, ketik "warung makan dekat sini" atau "jasa jahit Kajoran". Usahamu nggak muncul, yang muncul usaha lain.</p>
+      </article>
+      <article class="pb">
+        <span class="num">02</span>
+        <h3>Ditanya harga dan jam buka terus.</h3>
+        <p>Tiap hari balas pertanyaan yang sama lewat chat. Capek, dan pelanggan keburu pindah ke tempat yang infonya lebih jelas.</p>
+      </article>
+      <article class="pb">
+        <span class="num">03</span>
+        <h3>Cuma andalkan mulut ke mulut.</h3>
+        <p>Bagus, tapi jangkauannya berhenti di batas desa. Pelanggan baru dari luar nggak tahu kamu ada.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-        <section class="calc-list">
-            <h2>Pilih Kalkulator</h2>
-            <div class="calc-grid">
-                <!-- Kartu Kalkulator IPK -->
-                <a href="kalkulator-ipk.html" class="calc-card">
-                    <div class="calc-icon">🎓</div>
-                    <h3>Kalkulator IPK</h3>
-                    <p>Hitung Indeks Prestasi Kumulatif (IPK) kamu dengan mudah. Mendukung skala 4.0 sederhana dan skala plus/minus.</p>
-                    <span class="calc-btn">Buka Kalkulator →</span>
-                </a>
+<!-- ========================= YANG DIDAPAT GRATIS ========================= -->
+<section class="sec" id="gratis" style="padding-top:0">
+  <div class="wrap">
+    <div class="gift-head">
+      <div>
+        <span class="kicker">Yang kamu dapat</span>
+        <h2 class="display">Gratis. Lengkap. <em>Siap dipakai.</em></h2>
+      </div>
+      <p class="lead">Satu halaman rapi yang memuat semua yang pelanggan butuh sebelum datang atau memesan. Tanpa biaya pembuatan.</p>
+    </div>
 
-                <!-- Kartu Kalkulator BMI -->
-                <a href="kalkulator-bmi.html" class="calc-card">
-                    <div class="calc-icon">⚖️</div>
-                    <h3>Kalkulator BMI</h3>
-                    <p>Hitung Indeks Massa Tubuh (BMI) untuk dewasa. Ketahui kategori berat badanmu berdasarkan standar WHO dengan cepat.</p>
-                    <span class="calc-btn">Buka Kalkulator →</span>
-                </a>
-
-                <!-- AREA UNTUK KALKULATOR BARU NANTI -->
-                <!-- Contoh:
-                <a href="kalkulator-ips.html" class="calc-card">
-                    <div class="calc-icon">📊</div>
-                    <h3>Kalkulator IPS</h3>
-                    <p>Hitung Indeks Prestasi Semester.</p>
-                    <span class="calc-btn">Buka Kalkulator →</span>
-                </a>
-                -->
-            </div>
-        </section>
-
-        <!-- AREA IKLAN: bawah daftar kalkulator -->
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="container">
-            <nav class="footer-nav">
-                <a href="tentang.html">Tentang</a>
-                <a href="kontak.html">Kontak</a>
-                <a href="kebijakan-privasi.html">Kebijakan Privasi</a>
-                <a href="disclaimer.html">Disclaimer</a>
-            </nav>
-            <p class="copyright">© 2026 Hitungku. Semua perhitungan dilakukan di browser kamu.</p>
+    <div class="bento">
+      <article class="tile t-a">
+        <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18"/></svg>
+        <div>
+          <h3>Halaman online lengkap untuk usahamu</h3>
+          <p>Dirancang khusus: nama usaha, foto, dan semua info penting dalam satu halaman yang gampang dibagikan.</p>
         </div>
-    </footer>
+      </article>
+      <article class="tile t-b">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>
+        <div><h3>Menu &amp; harga</h3><p>Daftar produk atau layanan dengan harga yang jelas.</p></div>
+      </article>
+      <article class="tile t-c">
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div><h3>Jam buka</h3><p>Orang tahu kapan harus datang, kamu nggak perlu jawab lagi.</p></div>
+      </article>
+      <article class="tile t-d">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <div><h3>Peta lokasi</h3><p>Sekali tap, pelanggan langsung dapat arah ke tempatmu.</p></div>
+      </article>
+      <article class="tile t-e">
+        <svg class="ic" viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-11.8 7L4 20l1.2-4.4A8 8 0 1121 12z"/></svg>
+        <div><h3>Tombol pesan WhatsApp</h3><p>Pesanan masuk langsung ke WhatsApp-mu.</p></div>
+      </article>
+      <article class="tile t-f">
+        <div><h3>Enak dibuka di HP</h3><p>Sebagian besar pelangganmu membuka dari HP, jadi tampilannya dibuat nyaman dari layar kecil.</p></div>
+        <svg class="ic" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>
+      </article>
+      <article class="tile t-g">
+        <div><h3>Alamat web sendiri</h3><p>Pakai subdomain, contoh: <b style="color:var(--text)">namausaha.hitungku.my.id</b>. Mudah diingat dan dibagikan.</p></div>
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PORTOFOLIO ========================= -->
+<section class="sec" id="portofolio" style="padding-top:0">
+  <div class="wrap">
+    <span class="kicker">Portofolio</span>
+    <div class="porto-head">
+      <div class="big-number" id="klienCount" aria-hidden="true"></div>
+      <p class="lbl"><span id="klienLabel"></span></p>
+    </div>
+    <div class="porto-grid" id="portoGrid"></div>
+  </div>
+</section>
+
+<!-- ========================= CARA KERJA ========================= -->
+<section class="sec" id="cara" style="padding-top:0">
+  <div class="wrap">
+    <div class="steps-head">
+      <span class="kicker">Cara kerja</span>
+      <h2 class="display">Empat langkah. <em>Tanpa ribet.</em></h2>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <div class="n" aria-hidden="true">1</div>
+        <div><h3>Chat lewat WhatsApp</h3><p>Kirim nama usaha, alamat, jam buka, menu atau produk dengan harga, dan beberapa foto dari HP.</p></div>
+      </article>
+      <article class="step">
+        <div class="n" aria-hidden="true">2</div>
+        <div><h3>Saya buatkan contohnya</h3><p>Halaman contoh dikerjakan dalam 1-3 hari berdasarkan bahan dari kamu.</p></div>
+      </article>
+      <article class="step">
+        <div class="n" aria-hidden="true">3</div>
+        <div><h3>Kamu lihat dan kasih masukan</h3><p>Cek hasilnya di HP-mu. Ada yang kurang pas, kita rapikan bersama.</p></div>
+      </article>
+      <article class="step">
+        <div class="n" aria-hidden="true">4</div>
+        <div><h3>Cocok? Langsung tayang.</h3><p>Kalau cocok, halamanmu tayang di internet. Kalau nggak cocok, kamu nggak bayar dan nggak ada kewajiban.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= SYARAT & BATASAN ========================= -->
+<section class="sec" id="syarat" style="padding-top:0">
+  <div class="wrap">
+    <div class="terms">
+      <div>
+        <span class="kicker">Syarat &amp; batasan</span>
+        <h2>Biar jelas dari awal.</h2>
+      </div>
+      <ul>
+        <li>
+          <span class="chk"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <div><b>Gratis untuk usaha kecil</b><span>Untuk warung, toko, jasa, kerajinan, dan usaha kecil lain di desa atau kecamatan.</span></div>
+        </li>
+        <li>
+          <span class="chk"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <div><b>Memakai subdomain hitungku.my.id</b><span>Alamat halamanmu berbentuk namausaha.hitungku.my.id.</span></div>
+        </li>
+        <li>
+          <span class="chk"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <div><b>Domain sendiri? Boleh.</b><span>Biaya registrasi domain ditanggung kamu sendiri.</span></div>
+        </li>
+        <li>
+          <span class="chk"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <div><b>Perubahan besar dihitung terpisah</b><span>Revisi kecil wajar ikut gratis. Ganti total desain atau tambah fitur besar dibicarakan dan dihitung terpisah, tanpa kejutan.</span></div>
+        </li>
+        <li>
+          <span class="chk"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <div><b>Slot gratis terbatas</b><span>Hanya <span data-bind="kuotaTotal" style="color:var(--text);font-weight:700"></span> slot supaya tiap halaman dikerjakan dengan serius.</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= FAQ ========================= -->
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap faq-grid">
+    <div class="faq-head">
+      <span class="kicker">FAQ</span>
+      <h2 class="display">Masih <em>ragu?</em></h2>
+    </div>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<!-- ========================= PENUTUP ========================= -->
+<section class="closing" id="kontak">
+  <div class="wrap">
+    <span class="kicker">Mulai sekarang</span>
+    <h2>Giliran usahamu <em>tampil di internet.</em></h2>
+    <div class="closing-row">
+      <p class="lead">Kirim satu pesan WhatsApp. Contoh halamanmu jadi dalam 1-3 hari, nggak cocok nggak bayar.</p>
+      <div class="closing-act">
+        <a href="#" class="btn lg" data-wa="contoh">
+          Minta Contoh Gratis
+          <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <div class="quota" data-quota>
+          <div class="quota-label"><span class="dot"></span><span class="quota-text">Tersisa <b data-bind="kuotaSisa"></b> dari <b data-bind="kuotaTotal"></b> slot gratis</span></div>
+          <div class="track-bar" role="progressbar" aria-label="Sisa slot gratis"><div class="fill"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ========================= FOOTER ========================= -->
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a href="#hero" class="logo">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#111A2E"/><path d="M20 16v32M44 16v32M20 32h24" stroke="#22C55E" stroke-width="7" stroke-linecap="round" fill="none"/></svg>
+        Hitungku
+      </a>
+      <p style="margin-top:14px;max-width:32ch">Halaman online gratis untuk usaha kecil di desa dan kecamatan.</p>
+    </div>
+    <nav aria-label="Navigasi footer">
+      <a href="#masalah">Masalah</a>
+      <a href="#gratis">Yang didapat</a>
+      <a href="#portofolio">Portofolio</a>
+      <a href="#cara">Cara kerja</a>
+      <a href="#syarat">Syarat</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div>
+      <p data-bind="lokasi" style="color:var(--text);font-weight:600"></p>
+      <p style="margin-top:6px">&copy; <span id="year"></span> Hitungku</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp mengambang -->
+<a href="#" class="wa-float" data-wa="tanya" aria-label="Chat Hitungku lewat WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2z"/>
+    <path fill="#22C55E" d="M8.6 7.4c-.3 0-.6.2-.8.5-.5.7-.4 1.9.5 3.2 1.3 1.9 3 3.1 4.7 3.4.8.1 1.6-.4 1.8-1l.1-.5-1.9-.9-.7.8c-.9-.3-1.9-1.2-2.4-2.2l.7-.7-.8-2c-.1-.3-.4-.5-.8-.5z"/>
+  </svg>
+</a>
+
+<!-- ========================= LIBRARY (cdnjs, versi dipatok) ========================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+(function(){
+'use strict';
+gsap.registerPlugin(ScrollTrigger);
+
+/* =====================================================================
+   ISI HALAMAN DARI CONFIG (WA, kuota, portofolio, FAQ, marquee)
+   ===================================================================== */
+var ICON_PLUS='<svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
+var ICON_ARROW='<svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+var ICON_OUT='<svg class="ic" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+
+function waLink(jenis){
+  var pesan = jenis==='tanya' ? CONFIG.pesanTanya : CONFIG.pesanAwal;
+  return 'https://wa.me/'+CONFIG.nomorWA+'?text='+encodeURIComponent(pesan);
+}
+document.querySelectorAll('[data-wa]').forEach(function(a){
+  a.href = waLink(a.dataset.wa);
+  a.target = '_blank';
+  a.rel = 'noopener';
+});
+
+document.querySelectorAll('[data-bind]').forEach(function(el){
+  el.textContent = CONFIG[el.dataset.bind];
+});
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Kuota + progress bar (sisa / total) */
+var sisa = Math.max(0, Math.min(CONFIG.kuotaSisa, CONFIG.kuotaTotal));
+var kuotaPct = CONFIG.kuotaTotal>0 ? (sisa/CONFIG.kuotaTotal)*100 : 0;
+document.querySelectorAll('[data-quota]').forEach(function(q){
+  var bar=q.querySelector('.track-bar'), fill=q.querySelector('.fill');
+  bar.setAttribute('aria-valuemin','0');
+  bar.setAttribute('aria-valuemax',String(CONFIG.kuotaTotal));
+  bar.setAttribute('aria-valuenow',String(sisa));
+  fill.style.width = kuotaPct+'%';
+  if(sisa<=0){ q.querySelector('.quota-text').textContent='Slot gratis sedang penuh'; }
+});
+
+/* Marquee */
+(function(){
+  var unit = CONFIG.marquee.map(function(t){return '<span>'+t+'</span><i aria-hidden="true">·</i>';}).join('');
+  var grp = unit+unit+unit;
+  document.getElementById('marqueeTrack').innerHTML =
+    '<div class="grp">'+grp+'</div><div class="grp" aria-hidden="true">'+grp+'</div>';
+})();
+
+/* Portofolio */
+(function(){
+  document.getElementById('klienCount').textContent = CONFIG.jumlahKlienTayang;
+  document.getElementById('klienLabel').textContent = CONFIG.jumlahKlienTayang===1 ? 'klien sudah tayang.' : 'klien sudah tayang.';
+  var grid = document.getElementById('portoGrid');
+  CONFIG.portofolio.forEach(function(p,i){
+    var card=document.createElement('article');
+    card.className='card'+(i===0?' main':'');
+    var shot=document.createElement('div'); shot.className='shot';
+    var img=new Image();
+    img.alt='Tampilan halaman '+p.nama; img.loading='lazy';
+    img.onerror=function(){ // gambar belum ada -> blok warna
+      shot.classList.add('ph'); shot.innerHTML='<span>'+p.nama.charAt(0)+'</span>';
+    };
+    img.src=p.gambar; shot.appendChild(img);
+    var body=document.createElement('div'); body.className='card-body';
+    body.innerHTML='<span class="tag">Klien '+(i===0?'pertama':'tayang')+'</span><h3></h3><p></p>'+
+      '<a class="link-line" target="_blank" rel="noopener">Lihat situsnya '+ICON_OUT+'</a>';
+    body.querySelector('h3').textContent=p.nama;
+    body.querySelector('p').textContent=p.deskripsi;
+    body.querySelector('a').href=p.url;
+    card.appendChild(shot); card.appendChild(body); grid.appendChild(card);
+  });
+  var slot=document.createElement('article'); slot.className='card slot';
+  slot.innerHTML='<div><span class="kicker" style="margin-bottom:18px">Slot berikutnya</span><h3>Usahamu bisa jadi yang kedua.</h3><p>Kirim bahan usahamu, contoh jadi dalam 1-3 hari.</p></div>'+
+    '<a class="btn" target="_blank" rel="noopener">Minta Contoh Gratis '+ICON_ARROW+'</a>';
+  slot.querySelector('a').href=waLink('contoh');
+  grid.appendChild(slot);
+})();
+
+/* FAQ accordion */
+(function(){
+  var list=document.getElementById('faqList');
+  CONFIG.faq.forEach(function(f,i){
+    var item=document.createElement('div'); item.className='faq-item';
+    item.innerHTML='<h3><button class="faq-q" type="button" aria-expanded="false" id="faq-q-'+i+'" aria-controls="faq-a-'+i+'"><span></span><span class="faq-ic">'+ICON_PLUS+'</span></button></h3>'+
+      '<div class="faq-a" id="faq-a-'+i+'" role="region" aria-labelledby="faq-q-'+i+'"><div><p></p></div></div>';
+    item.querySelector('.faq-q span').textContent=f.q;
+    item.querySelector('p').textContent=f.a;
+    list.appendChild(item);
+  });
+  list.addEventListener('click',function(e){
+    var btn=e.target.closest('.faq-q'); if(!btn) return;
+    var item=btn.closest('.faq-item'); var willOpen=!item.classList.contains('open');
+    list.querySelectorAll('.faq-item.open').forEach(function(o){
+      o.classList.remove('open'); o.querySelector('.faq-q').setAttribute('aria-expanded','false');
+    });
+    if(willOpen){ item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+  });
+})();
+
+/* =====================================================================
+   LOADER: tulisan "Hitungku" huruf per huruf + persentase
+   ===================================================================== */
+var word='Hitungku';
+var loaderWord=document.getElementById('loaderWord');
+word.split('').forEach(function(c){
+  var s=document.createElement('span'); s.className='ch'; s.textContent=c; loaderWord.appendChild(s);
+});
+var letters=[].slice.call(loaderWord.querySelectorAll('.ch'));
+document.documentElement.classList.add('is-loading');
+gsap.set(letters,{yPercent:110});
+
+/* Posisi awal teks hero (disembunyikan sampai loader terbuka) */
+gsap.set('.hero-title .inner',{yPercent:115});
+gsap.set(['.eyebrow','.hero-sub','.hero-cta .btn','.hero .quota','.topbar .wrap'],{opacity:0,y:28});
+
+/* =====================================================================
+   BAGIAN THREE.JS — HERO 3D
+   Seluruh objek dibuat dari kode (tanpa model eksternal).
+   ===================================================================== */
+var hero=document.getElementById('hero');
+var canvas=document.getElementById('gl');
+
+/* --- 1. Renderer, scene, kamera --- */
+var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.1;
+renderer.setClearColor(0x000000,0);
+
+var scene=new THREE.Scene();
+var camera=new THREE.PerspectiveCamera(35,1,0.1,100);
+camera.position.set(0,0,9);
+
+/* --- 2. Lingkungan pantulan buatan (dibuat dari kode) ---
+   Beberapa panel terang (hijau & putih) di ruang gelap, diubah jadi environment map
+   supaya bodi HP dan objek kaca punya pantulan. */
+(function buildEnvironment(){
+  var envScene=new THREE.Scene();
+  envScene.background=new THREE.Color(0x0B1220);
+  function panel(w,h,d,color,power,x,y,z){
+    var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),
+      new THREE.MeshBasicMaterial({color:new THREE.Color(color).multiplyScalar(power)}));
+    m.position.set(x,y,z); envScene.add(m);
+  }
+  panel(1.4,11,7,0x22C55E,6,-9,0,2);     // strip hijau kiri
+  panel(11,1.1,7,0xE5E7EB,5,0,8,3);      // softbox putih atas
+  panel(1.2,8,7,0xE5E7EB,4,9,1,1);       // strip putih kanan
+  panel(7,0.7,4,0x22C55E,3,0,-8,0);      // pantulan hijau bawah
+  panel(9,3,0.5,0x94A3B8,1.4,0,0,-9);    // dinding belakang redup
+  panel(4,0.8,0.5,0xE5E7EB,3,3,3,9);     // kilau kecil dari depan
+  var pm=new THREE.PMREMGenerator(renderer);
+  scene.environment=pm.fromScene(envScene,0.03).texture;
+  pm.dispose();
+})();
+
+/* --- 3. Pencahayaan: satu cahaya hijau, satu cahaya putih lembut dari samping --- */
+var greenLight=new THREE.PointLight(0x22C55E,2.6,16,1);
+greenLight.position.set(-3.2,1.2,3.4);
+scene.add(greenLight);
+var whiteLight=new THREE.DirectionalLight(0xE5E7EB,0.95);
+whiteLight.position.set(5,2,3);
+scene.add(whiteLight);
+scene.add(new THREE.HemisphereLight(0x94A3B8,0x0B1220,0.22));
+
+/* --- 4. Helper: bentuk persegi panjang bersudut membulat --- */
+function roundedRectShape(w,h,r){
+  var s=new THREE.Shape(), x=-w/2, y=-h/2, P=Math.PI;
+  s.moveTo(x+r,y);
+  s.lineTo(x+w-r,y);   s.absarc(x+w-r,y+r,r,-P/2,0,false);
+  s.lineTo(x+w,y+h-r); s.absarc(x+w-r,y+h-r,r,0,P/2,false);
+  s.lineTo(x+r,y+h);   s.absarc(x+r,y+h-r,r,P/2,P,false);
+  s.lineTo(x,y+r);     s.absarc(x+r,y+r,r,P,P*1.5,false);
+  return s;
+}
+
+/* --- 5. Tekstur layar: mockup halaman warung lewat Canvas 2D --- */
+var SCREEN_W=696, SCREEN_H=1500;
+var screenCanvas=document.createElement('canvas');
+screenCanvas.width=SCREEN_W; screenCanvas.height=SCREEN_H;
+var sctx=screenCanvas.getContext('2d');
+var FONT='"Plus Jakarta Sans",system-ui,sans-serif';
+
+function rrPath(c,x,y,w,h,r){
+  c.beginPath();
+  c.moveTo(x+r,y); c.lineTo(x+w-r,y); c.arcTo(x+w,y,x+w,y+r,r);
+  c.lineTo(x+w,y+h-r); c.arcTo(x+w,y+h,x+w-r,y+h,r);
+  c.lineTo(x+r,y+h); c.arcTo(x,y+h,x,y+h-r,r);
+  c.lineTo(x,y+r); c.arcTo(x,y,x+r,y,r); c.closePath();
+}
+function drawScreen(){
+  var c=sctx, W=SCREEN_W, H=SCREEN_H, pad=48;
+  c.clearRect(0,0,W,H);
+  c.save();
+  rrPath(c,0,0,W,H,98); c.clip();               // sudut layar membulat
+  c.fillStyle='#0B1220'; c.fillRect(0,0,W,H);
+
+  // status bar + dynamic island
+  c.fillStyle='#E5E7EB'; c.font='700 28px '+FONT; c.textAlign='left'; c.textBaseline='alphabetic';
+  c.fillText('09.41',pad+12,70);
+  c.fillStyle='rgba(0,0,0,.85)'; rrPath(c,W/2-92,30,184,52,26); c.fill();
+  c.fillStyle='#E5E7EB'; rrPath(c,W-pad-62,50,44,20,6); c.fill();
+
+  // nama usaha
+  c.fillStyle='#22C55E'; c.font='700 24px '+FONT;
+  if('letterSpacing' in c) c.letterSpacing='4px';
+  c.fillText('WARUNG MAKAN & KOPI',pad,178);
+  if('letterSpacing' in c) c.letterSpacing='-4px';
+  c.fillStyle='#E5E7EB'; c.font='800 112px '+FONT;
+  c.fillText('Warung',pad,296);
+  c.fillText('Bu Sri',pad,406);
+  if('letterSpacing' in c) c.letterSpacing='0px';
+  c.fillStyle='#94A3B8'; c.font='500 29px '+FONT;
+  c.fillText('Masakan rumahan dari dapur desa.',pad,462);
+
+  // blok foto (ilustrasi sederhana mangkuk)
+  c.fillStyle='#111A2E'; rrPath(c,pad,500,W-2*pad,262,28); c.fill();
+  c.strokeStyle='rgba(255,255,255,.08)'; c.lineWidth=2; rrPath(c,pad,500,W-2*pad,262,28); c.stroke();
+  c.fillStyle='#22C55E'; c.beginPath(); c.arc(W/2,640,74,0,Math.PI*2); c.fill();
+  c.fillStyle='#0B1220'; c.beginPath(); c.arc(W/2,640,50,0,Math.PI*2); c.fill();
+  c.strokeStyle='#E5E7EB'; c.lineWidth=7; c.lineCap='round';
+  [-26,0,26].forEach(function(dx){ c.beginPath(); c.moveTo(W/2+dx,552); c.quadraticCurveTo(W/2+dx+14,534,W/2+dx,516); c.stroke(); });
+
+  // chip info
+  c.font='700 25px '+FONT;
+  c.fillStyle='#111A2E'; rrPath(c,pad,790,276,60,30); c.fill();
+  rrPath(c,pad+292,790,200,60,30); c.fill();
+  c.strokeStyle='rgba(255,255,255,.08)'; c.lineWidth=2;
+  rrPath(c,pad,790,276,60,30); c.stroke(); rrPath(c,pad+292,790,200,60,30); c.stroke();
+  c.fillStyle='#22C55E'; c.beginPath(); c.arc(pad+34,820,8,0,Math.PI*2); c.fill();
+  c.fillStyle='#E5E7EB'; c.fillText('Buka 07.00–21.00',pad+54,829);
+  c.fillText('Lihat peta',pad+292+34,829);
+
+  // menu
+  c.fillStyle='#94A3B8'; c.font='700 23px '+FONT;
+  if('letterSpacing' in c) c.letterSpacing='4px';
+  c.fillText('MENU HARI INI',pad,926);
+  if('letterSpacing' in c) c.letterSpacing='0px';
+  var menu=[['Nasi Gudeg','15.000'],['Soto Ayam','13.000'],['Mie Ayam','10.000'],['Es Teh Manis','4.000']];
+  menu.forEach(function(m,i){
+    var y=996+i*76;
+    c.fillStyle='#E5E7EB'; c.font='600 33px '+FONT; c.textAlign='left'; c.fillText(m[0],pad,y);
+    c.fillStyle='#94A3B8'; c.font='600 29px '+FONT; c.textAlign='right'; c.fillText('Rp '+m[1],W-pad,y);
+    c.strokeStyle='rgba(255,255,255,.08)'; c.lineWidth=2;
+    c.beginPath(); c.moveTo(pad,y+26); c.lineTo(W-pad,y+26); c.stroke();
+  });
+  c.textAlign='left';
+
+  // tombol hijau "Pesan via WA"
+  c.fillStyle='#22C55E'; rrPath(c,pad,1310,W-2*pad,108,54); c.fill();
+  c.fillStyle='#0B1220'; c.font='800 40px '+FONT; c.textAlign='center';
+  c.fillText('Pesan via WA',W/2,1378);
+  c.textAlign='left';
+
+  // indikator bawah
+  c.fillStyle='rgba(229,231,235,.6)'; rrPath(c,W/2-70,1466,140,8,4); c.fill();
+  c.restore();
+}
+drawScreen();
+var screenTex=new THREE.CanvasTexture(screenCanvas);
+screenTex.encoding=THREE.sRGBEncoding;
+screenTex.anisotropy=renderer.capabilities.getMaxAnisotropy();
+// gambar ulang setelah font Plus Jakarta Sans siap
+Promise.all([
+  document.fonts.load('800 60px "Plus Jakarta Sans"'),
+  document.fonts.load('700 30px "Plus Jakarta Sans"'),
+  document.fonts.load('600 30px "Plus Jakarta Sans"'),
+  document.fonts.load('500 30px "Plus Jakarta Sans"')
+]).then(function(){ drawScreen(); screenTex.needsUpdate=true; }).catch(function(){});
+
+/* --- 6. Model HP: badan ExtrudeGeometry + bezel hitam + layar PlaneGeometry --- */
+var rig=new THREE.Group();     // posisi/skala/intro
+var phone=new THREE.Group();   // rotasi mengikuti input
+rig.add(phone); scene.add(rig);
+
+var PW=1.7, PH=3.5, PR=0.3;
+var bodyGeo=new THREE.ExtrudeGeometry(roundedRectShape(PW,PH,PR),{
+  depth:0.12, bevelEnabled:true, bevelThickness:0.045, bevelSize:0.045, bevelSegments:8, curveSegments:48
+});
+bodyGeo.center();
+bodyGeo.computeBoundingBox();
+var frontZ=bodyGeo.boundingBox.max.z;
+var PH_TOTAL=PH+0.09;
+var bodyMat=new THREE.MeshStandardMaterial({color:0x111A2E,metalness:0.9,roughness:0.26,envMapIntensity:1.5});
+phone.add(new THREE.Mesh(bodyGeo,bodyMat));
+
+// bezel hitam
+var bezelMat=new THREE.MeshStandardMaterial({color:new THREE.Color(0x0B1220).multiplyScalar(0.3),metalness:0,roughness:0.4});
+var bezel=new THREE.Mesh(new THREE.ShapeGeometry(roundedRectShape(PW,PH,0.29),48),bezelMat);
+bezel.position.z=frontZ+0.002; phone.add(bezel);
+
+// layar (PlaneGeometry + CanvasTexture)
+var screen=new THREE.Mesh(
+  new THREE.PlaneGeometry(1.56,3.36),
+  new THREE.MeshBasicMaterial({map:screenTex,transparent:true,toneMapped:false})
+);
+screen.position.z=frontZ+0.005; phone.add(screen);
+
+// tombol samping
+var btnMat=new THREE.MeshStandardMaterial({color:0x94A3B8,metalness:0.9,roughness:0.3,envMapIntensity:1.4});
+[[ -1,0.7,0.34],[-1,0.1,0.34],[1,0.5,0.55]].forEach(function(b){
+  var m=new THREE.Mesh(new THREE.BoxGeometry(0.05,b[2],0.07),btnMat);
+  m.position.set(b[0]*(PW/2+0.062),b[1],0); phone.add(m);
+});
+
+/* --- 7. Objek kaca melayang: bola dan kubus kecil --- */
+var glassDefs=[
+  {t:'s',size:0.34,home:[-3.0, 1.5, 0.9],col:0x22C55E,spin:[0.30,0.20]},
+  {t:'b',size:0.46,home:[ 3.0, 1.7, 0.5],col:0xE5E7EB,spin:[0.25,0.35]},
+  {t:'b',size:0.34,home:[-2.4,-1.5, 1.3],col:0x22C55E,spin:[0.40,0.22]},
+  {t:'s',size:0.44,home:[ 2.7,-1.2, 1.0],col:0xE5E7EB,spin:[0.18,0.28]},
+  {t:'s',size:0.22,home:[-1.7, 2.2,-0.6],col:0x94A3B8,spin:[0.35,0.30]},
+  {t:'b',size:0.30,home:[ 1.8,-2.1,-0.5],col:0x22C55E,spin:[0.28,0.38]},
+  {t:'s',size:0.26,home:[ 1.0, 2.3, 1.1],col:0x22C55E,spin:[0.22,0.26]},
+  {t:'b',size:0.24,home:[-3.7, 0.0,-0.8],col:0x94A3B8,spin:[0.32,0.18]}
+];
+var glass=glassDefs.map(function(d,i){
+  var geo=d.t==='s' ? new THREE.SphereGeometry(d.size,48,48) : new THREE.BoxGeometry(d.size,d.size,d.size);
+  var mat=new THREE.MeshPhysicalMaterial({
+    color:d.col,metalness:0,roughness:0.06,
+    transmission:0.9,thickness:0.8,ior:1.45,
+    transparent:true,opacity:0.6,
+    clearcoat:1,clearcoatRoughness:0.05,envMapIntensity:1.7
+  });
+  var mesh=new THREE.Mesh(geo,mat); scene.add(mesh);
+  return {mesh:mesh,def:d,pos:new THREE.Vector3(d.home[0],d.home[1],d.home[2]),vel:new THREE.Vector3(),phase:i*1.37,spinBoost:0};
+});
+
+/* --- 8. Layout responsif (HP besar di tengah, menyesuaikan layar) --- */
+var L={phoneScale:1,oy:0,sx:1,sy:1,objScale:1};
+function layout(w,h){
+  var aspect=w/h;
+  var vH=2*camera.position.z*Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
+  var vW=vH*aspect;
+  if(aspect<1){ // potret / HP: HP di bagian atas, teks di bawah
+    L.phoneScale=Math.min(1,0.36*vH/PH_TOTAL);
+    L.oy=vH*0.27;
+    L.sx=Math.max(0.3,Math.min(1,vW/6));
+    L.sy=0.5; L.objScale=0.72;
+  }else{        // lanskap / desktop: HP besar di tengah
+    L.phoneScale=0.64*vH/PH_TOTAL;
+    L.oy=-vH*0.01;
+    L.sx=Math.min(1,vW/10.5);
+    L.sy=Math.min(1,vH/5.8); L.objScale=1;
+  }
+}
+function resize(){
+  var w=hero.clientWidth, h=hero.clientHeight;
+  renderer.setSize(w,h,false);
+  camera.aspect=w/h; camera.updateProjectionMatrix();
+  layout(w,h);
+}
+resize();
+if(window.ResizeObserver){ new ResizeObserver(resize).observe(hero); } else { window.addEventListener('resize',resize); }
+
+/* --- 9. Input: kursor, sentuhan jari, sensor gerak (lerp halus) --- */
+var tgt={x:0,y:0}, cur={x:0,y:0};           // tilt target & nilai terhalus
+var pointer={active:false,nx:0,ny:0};       // posisi pointer pada canvas (NDC) untuk menjauhkan objek kaca
+var motionOn=false;
+
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function setPointer(e){
+  var r=canvas.getBoundingClientRect();
+  var inside=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;
+  pointer.active=inside;
+  pointer.nx=((e.clientX-r.left)/r.width)*2-1;
+  pointer.ny=-(((e.clientY-r.top)/r.height)*2-1);
+  if(e.pointerType==='mouse'||!motionOn){
+    tgt.x=(e.clientX/window.innerWidth)*2-1;
+    tgt.y=(e.clientY/window.innerHeight)*2-1;
+  }
+}
+window.addEventListener('pointermove',setPointer,{passive:true});
+window.addEventListener('pointerdown',setPointer,{passive:true});
+function endPointer(e){
+  pointer.active=false;
+  if(e.pointerType!=='mouse'&&!motionOn){ tgt.x=0; tgt.y=0; }
+}
+window.addEventListener('pointerup',endPointer,{passive:true});
+window.addEventListener('pointercancel',endPointer,{passive:true});
+document.addEventListener('pointerleave',function(){pointer.active=false;});
+
+// Sensor gerak HP (DeviceOrientation). iOS wajib minta izin dari gestur pengguna.
+function onOrient(e){
+  if(e.gamma==null||e.beta==null) return;
+  motionOn=true;
+  tgt.x=clamp(e.gamma/28,-1,1);
+  tgt.y=clamp((e.beta-55)/28,-1,1);
+}
+var motionAsked=false;
+function askMotion(){
+  if(motionAsked) return;
+  if(typeof DeviceOrientationEvent!=='undefined' && typeof DeviceOrientationEvent.requestPermission==='function'){
+    motionAsked=true;
+    DeviceOrientationEvent.requestPermission().then(function(s){
+      if(s==='granted') window.addEventListener('deviceorientation',onOrient);
+    }).catch(function(){ motionAsked=false; });
+  }
+}
+if(typeof DeviceOrientationEvent!=='undefined' && typeof DeviceOrientationEvent.requestPermission!=='function'){
+  window.addEventListener('deviceorientation',onOrient);   // Android & lainnya: langsung aktif
+}else{
+  window.addEventListener('click',askMotion);
+  window.addEventListener('touchend',askMotion,{passive:true});
+}
+
+/* --- 10. Animasi masuk (dipanggil setelah loader terbuka) --- */
+var intro={p:0};
+function playIntro(){ gsap.to(intro,{p:1,duration:2.4,ease:'expo.out'}); }
+
+/* --- 11. Loop render --- */
+var heroVisible=true;
+if(window.IntersectionObserver){
+  new IntersectionObserver(function(en){heroVisible=en[0].isIntersecting;},{threshold:0}).observe(hero);
+}
+var clock=new THREE.Clock();
+var tmpV=new THREE.Vector3();
+
+function frame(){
+  requestAnimationFrame(frame);
+  var dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime;
+  if(!heroVisible) return;
+
+  // lerp halus menuju target
+  var k=1-Math.exp(-dt*4.5);
+  cur.x+=(tgt.x-cur.x)*k;
+  cur.y+=(tgt.y-cur.y)*k;
+
+  // HP: melayang naik-turun pelan + miring mengikuti input
+  var p=intro.p;
+  rig.position.set(0,L.oy,0);
+  rig.scale.setScalar(L.phoneScale*(0.55+0.45*p));
+  rig.rotation.y=(1-p)*-1.3;
+  phone.position.y=Math.sin(t*0.9)*0.1;
+  phone.rotation.y=cur.x*0.55+Math.sin(t*0.5)*0.05;
+  phone.rotation.x=-cur.y*0.38+Math.cos(t*0.4)*0.03;
+  phone.rotation.z=-cur.x*0.05;
+
+  // cahaya hijau ikut bergeser sedikit supaya pantulan hidup
+  greenLight.position.x=-3.2+cur.x*1.6;
+  greenLight.position.y=1.2-cur.y*1.2;
+
+  // objek kaca: pegas ke posisi asal + menjauh saat disentuh
+  glass.forEach(function(g){
+    var d=g.def;
+    var hx=d.home[0]*L.sx+Math.sin(t*0.6+g.phase)*0.12+cur.x*0.22*(1+d.home[2]*0.3);
+    var hy=d.home[1]*L.sy+L.oy+Math.sin(t*0.8+g.phase*1.7)*0.16-cur.y*0.15;
+    var hz=d.home[2]+Math.cos(t*0.5+g.phase)*0.1;
+
+    if(pointer.active){
+      tmpV.copy(g.pos).project(camera);
+      var dx=tmpV.x-pointer.nx, dy=tmpV.y-pointer.ny;
+      var dist=Math.hypot(dx*camera.aspect,dy), R=0.42;
+      if(dist<R){
+        var f=1-dist/R, len=dist||1;
+        g.vel.x+=(dx*camera.aspect/len)*f*42*dt;
+        g.vel.y+=(dy/len)*f*42*dt;
+        g.vel.z+=f*10*dt;
+        g.spinBoost=Math.min(g.spinBoost+f*dt*18,4);
+      }
+    }
+    g.vel.x+=((hx-g.pos.x)*6-g.vel.x*2.8)*dt;
+    g.vel.y+=((hy-g.pos.y)*6-g.vel.y*2.8)*dt;
+    g.vel.z+=((hz-g.pos.z)*6-g.vel.z*2.8)*dt;
+    g.pos.addScaledVector(g.vel,dt);
+    g.spinBoost*=Math.exp(-dt*2);
+
+    g.mesh.position.copy(g.pos);
+    g.mesh.rotation.x+=dt*d.spin[0]*(1+g.spinBoost);
+    g.mesh.rotation.y+=dt*d.spin[1]*(1+g.spinBoost);
+    g.mesh.scale.setScalar(L.objScale*p);
+    g.mesh.visible=p>0.001;
+  });
+
+  renderer.render(scene,camera);
+}
+frame();
+
+/* =====================================================================
+   SEKUENS LOADER -> BUKA KE HERO
+   ===================================================================== */
+var loader=document.getElementById('loader');
+var pctEl=document.getElementById('loaderPct');
+var barEl=document.getElementById('loaderBar');
+var counter={v:0}, shown=0;
+
+var pageReady=Promise.all([
+  document.fonts.ready,
+  new Promise(function(r){ if(document.readyState==='complete') r(); else window.addEventListener('load',r); })
+]);
+
+function heroTextIn(){
+  var tl=gsap.timeline();
+  tl.to('.topbar .wrap',{opacity:1,y:0,duration:.8,ease:'power3.out'},0)
+    .to('.eyebrow',{opacity:1,y:0,duration:.8,ease:'power3.out'},0.1)
+    .to('.hero-title .inner',{yPercent:0,duration:1.2,ease:'expo.out',stagger:.12},0.15)
+    .to('.hero-sub',{opacity:1,y:0,duration:.9,ease:'power3.out'},0.7)
+    .to('.hero-cta .btn',{opacity:1,y:0,duration:.9,ease:'power3.out'},0.8)
+    .to('.hero .quota',{opacity:1,y:0,duration:.9,ease:'power3.out'},0.9)
+    .fromTo('.hero .quota .fill',{width:'0%'},{width:kuotaPct+'%',duration:1.4,ease:'power3.out'},1.0);
+}
+
+function openLoader(){
+  var tl=gsap.timeline({onComplete:function(){ loader.style.display='none'; }});
+  tl.to(letters,{yPercent:-110,duration:.55,ease:'power3.in',stagger:.035})
+    .to([pctEl.parentNode,'.loader-note'],{opacity:0,duration:.35},'<')
+    .to(loader,{yPercent:-100,duration:1.05,ease:'expo.inOut'},'-=.15')
+    .add(function(){
+      document.documentElement.classList.remove('is-loading');
+      playIntro(); heroTextIn();
+    },'-=.8');
+}
+
+gsap.to(counter,{
+  v:100,duration:2.8,ease:'power2.inOut',
+  onUpdate:function(){
+    var v=counter.v;
+    pctEl.textContent=String(Math.round(v)).padStart(3,'0');
+    barEl.style.transform='scaleX('+(v/100)+')';
+    // huruf muncul satu per satu mengikuti persentase
+    var need=Math.min(letters.length,Math.floor(v/100*letters.length+0.999));
+    while(shown<need){
+      gsap.to(letters[shown],{yPercent:0,duration:.7,ease:'expo.out'});
+      shown++;
+    }
+  },
+  onComplete:function(){ pageReady.then(function(){ setTimeout(openLoader,250); }); }
+});
+
+})();
+</script>
 </body>
 </html>
